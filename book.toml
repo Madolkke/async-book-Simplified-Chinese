@@ -1,0 +1,6 @@
+[book]
+authors = ["madolchepalooza"]
+language = "zh_CN"
+multilingual = true
+src = "src"
+title = "Rust异步手册"
