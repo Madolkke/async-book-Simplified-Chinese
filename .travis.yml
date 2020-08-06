@@ -26,5 +26,6 @@ before_cache:
 
 env:
   RUSTINFRA_DEPLOY_DIR: book
+  GITHUB_DEPLOY_KEY: No
 import:
   - rust-lang/simpleinfra:travis-configs/static-websites.yml
