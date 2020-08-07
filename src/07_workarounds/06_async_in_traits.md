@@ -1,14 +1,7 @@
-# `async` in Traits
+# Trait中的`async` 
 
-Currently, `async fn` cannot be used in traits. The reasons for this are
-somewhat complex, but there are plans to remove this restriction in the
-future.
+目前还不能在trait中使用`async fn`。原因有点复杂，但移除这种限制已在计划之中。
 
-In the meantime, however, this can be worked around using the
-[async-trait crate from crates.io](https://github.com/dtolnay/async-trait).
+但与此同时，其实可以用[crates.io中的async-trait crate](https://github.com/dtolnay/async-trait)来实现。
 
-Note that using these trait methods will result in a heap allocation
-per-function-call. This is not a significant cost for the vast majority
-of applications, but should be considered when deciding whether to use
-this functionality in the public API of a low-level function that is expected
-to be called millions of times a second.
+需要注意的是，使用这些trait方法会导致，每次调用函数时都需要进行堆分配。尽管对于大部分应用来说都不会有什么显著的开销，但是若准备在那种，可能每秒都要调用几百万次的，底层函数的公共API里使用此功能，还请三思。

@@ -1,18 +1,18 @@
 # 通过`Waker`唤醒Task
 
-future在第一次被`poll`时尚未完成是一件很平常的事。这件事发生时，future需要确保它在有新的进展时能够再次被轮询到。可以通过`Waker`类型做到这件事。
+future在第一次被`poll`时尚未完成相当常见。此时，future需要确保它在有新进展时能够再次被轮询到，可通过`Waker`类型来实现。
 
-每次一个future被轮询时，其实是作为一个"task"的一部分来进行的。Task是被提交给executor的上层future们。
+每次一个future被轮询时，其实是作为一个"task"的一部分来进行的。task是被提交给executor的各个上层future。
 
-`Waker`提供了一个`wake()`方法，能够用于告知executor其关联的task需要被唤醒。当`wake()`被调用的时候，executor就知道与`Waker`关联的task已经有了进展，而future则会再次被轮询。
+`Waker`提供了一个`wake()`方法，能够用于告知executor其关联的task需被唤醒。当`wake()`被调用时，executor就知道与`Waker`关联的task已有进展，而future则会再次被轮询。
 
-`Waker`也实现了`clone()`，因此它可以被复制再储存。
+`Waker`也实现了`clone()`，因此它可被复制再储存。
 
 来试试通过`Waker`实现一个简单的定时器吧。
 
 ## 应用：创建定时器
 
-由于只是个例子，我们将只在定时器创建时开辟一条新的线程，使其休眠所需的时间，然后在时间窗口结束时向计时器发出信号。
+由于只是作为例子，我们要做的就是在定时器创建时开辟一条新的线程，使其休眠所需的时间，然后在时间窗口结束时向计时器发出信号。
 
 这是开始时要添加的import：
 
@@ -20,9 +20,7 @@ future在第一次被`poll`时尚未完成是一件很平常的事。这件事�
 {{#include ../../examples/02_03_timer/src/lib.rs:imports}}
 ```
 
-首先要定义future类型。future需要一条途径来告知线程定时器已经过指定的时间，该future应该被完成。
-
-我们用一个共享的`Arc<Mutex<..>>`值来使线程和future进行交流。
+首先要定义future类型。future需要一个方法来告知线程：定时器时间已到，本future需要被完成。于是用一个共享的`Arc<Mutex<..>>`值来使线程和future进行交流。
 
 ```rust,ignore
 {{#include ../../examples/02_03_timer/src/lib.rs:timer_decl}}
@@ -44,4 +42,4 @@ future在第一次被`poll`时尚未完成是一件很平常的事。这件事�
 {{#include ../../examples/02_03_timer/src/lib.rs:timer_new}}
 ```
 
-这就是创建一个简单的计时器future的全过程了。现在，只差一个用于运行future的executor了
+这就是创建一个简单的计时器future的全过程了。现在，只差一个用于运行future的executor了。

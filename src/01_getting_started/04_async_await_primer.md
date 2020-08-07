@@ -36,12 +36,12 @@ async fn dance() { /* ... */ }
 {{#include ../../examples/01_04_async_await_primer/src/lib.rs:block_on_each}}
 ```
 
-这不是最好的方式——一次只能做一件事！显然要想sing，我们就必须先learn song，而dance是可以与learn和sing同时进行的。要这样做的话，可以创建两个可以并行运行的`async fn`：
+但这远非最好的方式——因为一次只能做一件事！显然要想sing，我们就必须先learn song，而dance是可以与learn和sing同时进行的。要这样做的话，可以创建两个可并行运行的`async fn`：
 
 ```rust,ignore
 {{#include ../../examples/01_04_async_await_primer/src/lib.rs:block_on_main}}
 ```
 
-在这个例子中，learn song一定会发生在sing song之前，但是learn和sing都可以和dance同时进行。如果我们在`learn_and_sing`中使用`block_on(learn_song())`而非`learn_song().await`，线程就不能在`learn_song`的同时做其他的事情了。(后者)使得我们可以同时进行`dance`。通过`.await` `learn_song`的future，我们使得其他的任务可以在`learn_song`被阻塞时接管当前线程，这样就能在同一线程上并发运行多个future直至其完成了。
+在这个例子中，learn song一定会发生在sing song之前，但是learn和sing都可以和dance同时进行。如果我们在`learn_and_sing`中使用`block_on(learn_song())`而非`learn_song().await`，线程就不能在`learn_song`的同时做其他的事情了。(后者)使得我们可以同时进行`dance`。通过`.await` `learn_song`的future，我们让其他的任务可在`learn_song`被阻塞时接管当前线程，这样就能在同一线程上并发运行多个future直至其完成了。
 
 现在你已经学习到了`async`/`await`的基础知识了，来个例子试试吧。
