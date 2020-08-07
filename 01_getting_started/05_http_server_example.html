@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="zh_CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Applied: HTTP Server - Rust异步手册</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../01_getting_started/01_chapter.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../01_getting_started/02_why_async.html"><strong aria-hidden="true">1.1.</strong> Why Async?</a></li><li class="chapter-item expanded "><a href="../01_getting_started/03_state_of_async_rust.html"><strong aria-hidden="true">1.2.</strong> The State of Asynchronous Rust</a></li><li class="chapter-item expanded "><a href="../01_getting_started/04_async_await_primer.html"><strong aria-hidden="true">1.3.</strong> async/.await Primer</a></li><li class="chapter-item expanded "><a href="../01_getting_started/05_http_server_example.html" class="active"><strong aria-hidden="true">1.4.</strong> Applied: HTTP Server</a></li></ol></li><li class="chapter-item expanded "><a href="../02_execution/01_chapter.html"><strong aria-hidden="true">2.</strong> Under the Hood: Executing Futures and Tasks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../02_execution/02_future.html"><strong aria-hidden="true">2.1.</strong> The Future Trait</a></li><li class="chapter-item expanded "><a href="../02_execution/03_wakeups.html"><strong aria-hidden="true">2.2.</strong> Task Wakeups with Waker</a></li><li class="chapter-item expanded "><a href="../02_execution/04_executor.html"><strong aria-hidden="true">2.3.</strong> Applied: Build an Executor</a></li><li class="chapter-item expanded "><a href="../02_execution/05_io.html"><strong aria-hidden="true">2.4.</strong> Executors and System IO</a></li></ol></li><li class="chapter-item expanded "><a href="../03_async_await/01_chapter.html"><strong aria-hidden="true">3.</strong> async/await</a></li><li class="chapter-item expanded "><a href="../04_pinning/01_chapter.html"><strong aria-hidden="true">4.</strong> Pinning</a></li><li class="chapter-item expanded "><a href="../05_streams/01_chapter.html"><strong aria-hidden="true">5.</strong> Streams</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../05_streams/02_iteration_and_concurrency.html"><strong aria-hidden="true">5.1.</strong> Iteration and Concurrency</a></li></ol></li><li class="chapter-item expanded "><a href="../06_multiple_futures/01_chapter.html"><strong aria-hidden="true">6.</strong> Executing Multiple Futures at a Time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../06_multiple_futures/02_join.html"><strong aria-hidden="true">6.1.</strong> join!</a></li><li class="chapter-item expanded "><a href="../06_multiple_futures/03_select.html"><strong aria-hidden="true">6.2.</strong> select!</a></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">6.3.</strong> TODO: Spawning</a></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">6.4.</strong> TODO: Cancellation and Timeouts</a></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">6.5.</strong> TODO: FuturesUnordered</a></li></ol></li><li class="chapter-item expanded "><a href="../07_workarounds/01_chapter.html"><strong aria-hidden="true">7.</strong> Workarounds to Know and Love</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../07_workarounds/02_return_type.html"><strong aria-hidden="true">7.1.</strong> Return Type Errors</a></li><li class="chapter-item expanded "><a href="../07_workarounds/03_err_in_async_blocks.html"><strong aria-hidden="true">7.2.</strong> ? in async Blocks</a></li><li class="chapter-item expanded "><a href="../07_workarounds/04_send_approximation.html"><strong aria-hidden="true">7.3.</strong> Send Approximation</a></li><li class="chapter-item expanded "><a href="../07_workarounds/05_recursion.html"><strong aria-hidden="true">7.4.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="../07_workarounds/06_async_in_traits.html"><strong aria-hidden="true">7.5.</strong> async in Traits</a></li></ol></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">8.</strong> TODO: I/O</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">8.1.</strong> TODO: AsyncRead and AsyncWrite</a></li></ol></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">9.</strong> TODO: Asynchronous Design Patterns: Solutions and Suggestions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">9.1.</strong> TODO: Modeling Servers and the Request/Response Pattern</a></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">9.2.</strong> TODO: Managing Shared State</a></li></ol></li><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">10.</strong> TODO: The Ecosystem: Tokio and More</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../404.html"><strong aria-hidden="true">10.1.</strong> TODO: Lots, lots more?...</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust异步手册</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#应用简单的http-server" id="应用简单的http-server">应用：简单的HTTP Server</a></h1>
+<p>来用<code>async</code>/<code>await</code>创建一个回显服务器吧！</p>
+<p>首先，使用<code>rustup update stable</code>来确保你在使用Rust 1.39或者更新的版本。完成后，再输入<code>cargo new async-await-echo</code>来创建一个新项目，打开<code>async-await-echo</code>的文件夹。</p>
+<p>在<code>Cargo.toml</code>中添加依赖：</p>
+<pre><code class="language-toml">[dependencies]
+# Hyper is an asynchronous HTTP library. We'll use it to power our HTTP
+# server and to make HTTP requests.
+hyper = &quot;0.13&quot;
+# To setup some sort of runtime needed by Hyper, we will use the Tokio runtime.
+tokio = { version = &quot;0.2&quot;, features = [&quot;full&quot;] }
+
+# (only for testing)
+anyhow = &quot;1.0.31&quot;
+reqwest = { version = &quot;0.10.4&quot;, features = [&quot;blocking&quot;] }
+</code></pre>
+<p>解决了依赖问题后，就写点代码吧。先添加必要的import：</p>
+<pre><code class="language-rust ignore">use {
+    hyper::{
+        // Following functions are used by Hyper to handle a `Request`
+        // and returning a `Response` in an asynchronous manner by using a Future
+        service::{make_service_fn, service_fn},
+        // Miscellaneous types from Hyper for working with HTTP.
+        Body,
+        Client,
+        Request,
+        Response,
+        Server,
+        Uri,
+    },
+    std::net::SocketAddr,
+};
+</code></pre>
+<p>之后，再加入用于处理请求的模板：</p>
+<pre><code class="language-rust ignore">async fn serve_req(_req: Request&lt;Body&gt;) -&gt; Result&lt;Response&lt;Body&gt;, hyper::Error&gt; {
+    // Always return successfully with a response containing a body with
+    // a friendly greeting ;)
+    Ok(Response::new(Body::from(&quot;hello, world!&quot;)))
+}
+
+async fn run_server(addr: SocketAddr) {
+    println!(&quot;Listening on http://{}&quot;, addr);
+
+    // Create a server bound on the provided address
+    let serve_future = Server::bind(&amp;addr)
+        // Serve requests using our `async serve_req` function.
+        // `serve` takes a type which implements the `MakeService` trait.
+        // `make_service_fn` converts a closure into a type which
+        // implements the `MakeService` trait. That closure must return a
+        // type that implements the `Service` trait, and `service_fn`
+        // converts a request-response function into a type that implements
+        // the `Service` trait.
+        .serve(make_service_fn(|_| async {
+            Ok::&lt;_, hyper::Error&gt;(service_fn(serve_req))
+        }));
+
+    // Wait for the server to complete serving or exit with an error.
+    // If an error occurred, print it to stderr.
+    if let Err(e) = serve_future.await {
+        eprintln!(&quot;server error: {}&quot;, e);
+    }
+}
+
+#[tokio::main]
+async fn main() {
+  // Set the address to run our socket on.
+  let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+
+  // Call our `run_server` function, which returns a future.
+  // As with every `async fn`, for `run_server` to do anything,
+  // the returned future needs to be run using `await`;
+  run_server(addr).await;
+}
+</code></pre>
+<p>现在<code>cargo run</code>的话，终端里应该会显示 &quot;Listening on http://127.0.0.1:3000&quot; 的信息。若在浏览器中打开，就能看到其显示 &quot;hello, world!&quot;。恭喜！你刚刚写出了你的第一个异步的Rust webserver。</p>
+<p>看一看请求的内容，就会发现它包含了请求的URI、HTTP版本号、请求头和其他的元数据一类的信息。可以这样直接输出请求的URI：</p>
+<pre><code class="language-rust ignore">println!(&quot;Got request at {:?}&quot;, _req.uri());
+</code></pre>
+<p>可能你已经注意到了，在处理请求时我们并没有以异步的方式进行——我们只是立即进行响应，因此没能充分使用<code>async fn</code>的便利。比起仅仅返回一个静态的消息，来试试用Hyper的HTTP client来代理用户请求吧。</p>
+<p>首先要解析请求的URL：</p>
+<pre><code class="language-rust ignore">        let url_str = &quot;http://www.rust-lang.org/en-US/&quot;;
+        let url = url_str.parse::&lt;Uri&gt;().expect(&quot;failed to parse URL&quot;);
+</code></pre>
+<p>然后创建一个新的<code>hyper::Client</code>，用它来发起一个<code>GET</code>请求，并将响应返回给用户：</p>
+<pre><code class="language-rust ignore">        let res = Client::new().get(url).await?;
+        // Return the result of the request directly to the user
+        println!(&quot;request finished-- returning response&quot;);
+        Ok(res)
+</code></pre>
+<p><code>Client::get</code>会返回一个<code>hyper::client::ResponseFuture</code>，其实现为<code>Future&lt;Output = Result&lt;Response&lt;Body&gt;&gt;&gt;</code>(在future 0.1阶段为<code>Future&lt;Item = Response&lt;Body&gt;, Error = Error&gt;</code>)。当对该future使用<code>.await</code>时，就发送了一个HTTP请求，且当前任务被挂起到队列中，直到有可用的响应。</p>
+<p>现在再<code>cargo run</code>并在浏览器中打开<code>http://127. 0.0.1:3000/foo</code>，就会看到Rust的主页，终端中有如下输出：</p>
+<pre><code>Listening on http://127.0.0.1:3000
+Got request at /foo
+making request to http://www.rust-lang.org/en-US/
+request finished-- returning response
+</code></pre>
+<p>庆贺吧！这样就成功地代理了一个HTTP请求。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../01_getting_started/04_async_await_primer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../02_execution/01_chapter.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../01_getting_started/04_async_await_primer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../02_execution/01_chapter.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

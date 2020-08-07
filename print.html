@@ -1,0 +1,2035 @@
+<!DOCTYPE HTML>
+<html lang="zh_CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust异步手册</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01_getting_started/01_chapter.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_getting_started/02_why_async.html"><strong aria-hidden="true">1.1.</strong> Why Async?</a></li><li class="chapter-item expanded "><a href="01_getting_started/03_state_of_async_rust.html"><strong aria-hidden="true">1.2.</strong> The State of Asynchronous Rust</a></li><li class="chapter-item expanded "><a href="01_getting_started/04_async_await_primer.html"><strong aria-hidden="true">1.3.</strong> async/.await Primer</a></li><li class="chapter-item expanded "><a href="01_getting_started/05_http_server_example.html"><strong aria-hidden="true">1.4.</strong> Applied: HTTP Server</a></li></ol></li><li class="chapter-item expanded "><a href="02_execution/01_chapter.html"><strong aria-hidden="true">2.</strong> Under the Hood: Executing Futures and Tasks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_execution/02_future.html"><strong aria-hidden="true">2.1.</strong> The Future Trait</a></li><li class="chapter-item expanded "><a href="02_execution/03_wakeups.html"><strong aria-hidden="true">2.2.</strong> Task Wakeups with Waker</a></li><li class="chapter-item expanded "><a href="02_execution/04_executor.html"><strong aria-hidden="true">2.3.</strong> Applied: Build an Executor</a></li><li class="chapter-item expanded "><a href="02_execution/05_io.html"><strong aria-hidden="true">2.4.</strong> Executors and System IO</a></li></ol></li><li class="chapter-item expanded "><a href="03_async_await/01_chapter.html"><strong aria-hidden="true">3.</strong> async/await</a></li><li class="chapter-item expanded "><a href="04_pinning/01_chapter.html"><strong aria-hidden="true">4.</strong> Pinning</a></li><li class="chapter-item expanded "><a href="05_streams/01_chapter.html"><strong aria-hidden="true">5.</strong> Streams</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_streams/02_iteration_and_concurrency.html"><strong aria-hidden="true">5.1.</strong> Iteration and Concurrency</a></li></ol></li><li class="chapter-item expanded "><a href="06_multiple_futures/01_chapter.html"><strong aria-hidden="true">6.</strong> Executing Multiple Futures at a Time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="06_multiple_futures/02_join.html"><strong aria-hidden="true">6.1.</strong> join!</a></li><li class="chapter-item expanded "><a href="06_multiple_futures/03_select.html"><strong aria-hidden="true">6.2.</strong> select!</a></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">6.3.</strong> TODO: Spawning</a></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">6.4.</strong> TODO: Cancellation and Timeouts</a></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">6.5.</strong> TODO: FuturesUnordered</a></li></ol></li><li class="chapter-item expanded "><a href="07_workarounds/01_chapter.html"><strong aria-hidden="true">7.</strong> Workarounds to Know and Love</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="07_workarounds/02_return_type.html"><strong aria-hidden="true">7.1.</strong> Return Type Errors</a></li><li class="chapter-item expanded "><a href="07_workarounds/03_err_in_async_blocks.html"><strong aria-hidden="true">7.2.</strong> ? in async Blocks</a></li><li class="chapter-item expanded "><a href="07_workarounds/04_send_approximation.html"><strong aria-hidden="true">7.3.</strong> Send Approximation</a></li><li class="chapter-item expanded "><a href="07_workarounds/05_recursion.html"><strong aria-hidden="true">7.4.</strong> Recursion</a></li><li class="chapter-item expanded "><a href="07_workarounds/06_async_in_traits.html"><strong aria-hidden="true">7.5.</strong> async in Traits</a></li></ol></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">8.</strong> TODO: I/O</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">8.1.</strong> TODO: AsyncRead and AsyncWrite</a></li></ol></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">9.</strong> TODO: Asynchronous Design Patterns: Solutions and Suggestions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">9.1.</strong> TODO: Modeling Servers and the Request/Response Pattern</a></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">9.2.</strong> TODO: Managing Shared State</a></li></ol></li><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">10.</strong> TODO: The Ecosystem: Tokio and More</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="404.html"><strong aria-hidden="true">10.1.</strong> TODO: Lots, lots more?...</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust异步手册</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#入门指南" id="入门指南">入门指南</a></h1>
+<p>欢迎来到异步Rust的世界！如果你正准备编写异步的Rust代码，就来对地方了。无论是搭建一个web服务器、数据库还是操作系统，本书都会向你展示如何运用Rust的异步编程工具，来最大限度地利用硬件。</p>
+<h2><a class="header" href="#本书所覆盖的内容" id="本书所覆盖的内容">本书所覆盖的内容</a></h2>
+<p>本书意在作为一个易于理解的最新指南，来讲解异步Rust语言特性和库的使用。无论是初学者还是老手都很适合阅读本书。</p>
+<ul>
+<li>
+<p>前面的章节会先从总体上介绍异步编程的概念，再从Rust的角度入手讨论。</p>
+</li>
+<li>
+<p>中间的章节讨论了可在编写异步代码时使用的实用程序和控制流工具，还讲述了关于在构造库和应用时，能够最大化性能和可重用性的实践方法。</p>
+</li>
+<li>
+<p>最后一节更广泛地讨论了Rust的异步生态，并提供了一系列的例子来展示，如何完成一些较为平常的任务。</p>
+</li>
+</ul>
+<p>扫清障碍后，就让我们来探索Rust异步编程的世界吧！</p>
+<h1><a class="header" href="#为什么需要异步" id="为什么需要异步">为什么需要异步?</a></h1>
+<p>Rust写出的程序又快又好，已经很受欢迎了，那为什么还要编写异步的代码呢？</p>
+<p>异步代码让我们能够在同一操作系统的线程上并发地运行多个任务。一个有代表性的例子就是，如果要同时下载两个网页，就得把工作分配给两个不同的线程，就像下面这样：</p>
+<pre><code class="language-rust ignore">fn get_two_sites() {
+    // Spawn two threads to do work.
+    let thread_one = thread::spawn(|| download(&quot;https://www.foo.com&quot;));
+    let thread_two = thread::spawn(|| download(&quot;https://www.bar.com&quot;));
+
+    // Wait for both threads to complete.
+    thread_one.join().expect(&quot;thread one panicked&quot;);
+    thread_two.join().expect(&quot;thread two panicked&quot;);
+}
+</code></pre>
+<p>确实这么做在很多应用场景下都行得通——毕竟这就是线程的设计目的：一次运行多个不同任务。然而局限性也同样存在：在不同的线程间切换或共享数据会带来很大的开销，即便一个线程不做任何事，也会消耗大量宝贵的系统资源。因而要通过异步的代码设计来消除开销。我们可以通过Rust的<code>async</code>/<code>.await</code>关键字来重写上面的函数，以在不创建多个线程的条件下同时运行多个任务：</p>
+<pre><code class="language-rust ignore">async fn get_two_sites_async() {
+    // Create two different &quot;futures&quot; which, when run to completion,
+    // will asynchronously download the webpages.
+    let future_one = download_async(&quot;https://www.foo.com&quot;);
+    let future_two = download_async(&quot;https://www.bar.com&quot;);
+
+    // Run both futures to completion at the same time.
+    join!(future_one, future_two);
+}
+</code></pre>
+<p>总的来说，与相应的线程实现相比，异步应用程序可能更快，开销更小，但并不是没有任何开销：线程是受操作系统原生支持的，使用线程不需要特殊的编程模型——任何函数都可以创建一个线程，而调用这些函数就跟调用普通的函数一样。而异步的函数则需要编程语言或库的额外支持。</p>
+<p>在Rust中，<code>async fn</code>能够创建一个返回<code>Future</code>的异步函数。为了执行其函数体，必须运行返回的<code>Future</code>来完成任务。</p>
+<p>别忘了传统的多线程应用也可以非常高效，而由于Rust的低内存占用和可预测性，即便不使用<code>async</code>也可以做很多事。由于异步编程模型而增加的复杂性不一定值得，因此考虑单纯地用多线程是不是更好，也很重要。</p>
+<h1><a class="header" href="#异步rust的现状" id="异步rust的现状">异步Rust的现状</a></h1>
+<p>随着时间的推移，异步Rust生态系统经历了许多演变，因此很难搞清楚该用什么工具、库或文档。而标准库中的<code>Future</code>trait和<code>async</code>/<code>await</code>最近才进入稳定版本，因此整个生态系统正处于向新稳定的API迁移的过程中，在此之后，点流失将显著减少。</p>
+<p>就现在来看，Rust异步编程的生态仍处于高速发展的阶段，而其体验还需进一步的打磨。许多库还在使用<code>futures</code>crate的0.1版本，也就是说为了实现互操作(<em>interoperate</em>)，开发者得从0.3版本的<code>futures</code>crate中使用<code>compat</code>。<code>async</code>/<code>await</code>的语言特性还处于新生阶段，像<code>async fn</code>这样的重要语法扩展也尚未实现，而现阶段编译器的错误也很难解析。</p>
+<p>也就是说，Rust尚在探索为其异步编程提供最具性能和易于编写的方式，如果没有因此心生畏惧，就请尽情享受在Rust中深入研究异步编程的世界吧！</p>
+<h1><a class="header" href="#asyncawait-入门" id="asyncawait-入门"><code>async</code>/<code>.await</code> 入门</a></h1>
+<p><code>async</code>/<code>.await</code>是Rust中用来像同步代码一样编写异步代码的工具。<code>async</code>会将一个代码块转换为一个实现了<code>Future</code>trait的状态机。尽管在同步方法中调用阻塞函数(<em>blocking function</em>)会使整个线程阻塞，被阻塞的<code>Future</code>会让出线程的控制权，好让其他的<code>Future</code>能够运行。</p>
+<p>先在<code>Cargo.toml</code>文件中添加一些依赖：</p>
+<pre><code class="language-toml">[dependencies]
+futures = &quot;0.3&quot;
+</code></pre>
+<p>使用<code>async fn</code>的语法就可以创建一个异步函数了：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_something() { /* ... */ }
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>async fn</code>返回值是一个<code>Future</code>，一个<code>Future</code>必须通过executor来运行。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">// `block_on` blocks the current thread until the provided future has run to
+// completion. Other executors provide more complex behavior, like scheduling
+// multiple futures onto the same thread.
+use futures::executor::block_on;
+
+async fn hello_world() {
+    println!(&quot;hello, world!&quot;);
+}
+
+fn main() {
+    let future = hello_world(); // Nothing is printed
+    block_on(future); // `future` is run and &quot;hello, world!&quot; is printed
+}
+</code></pre></pre>
+<p>在一个<code>async fn</code>中，可以使用<code>.await</code>来等待另一个实现了<code>Future</code>trait的类型的完成，比如另一个<code>async fn</code>的输出。与<code>block_on</code>不同，<code>.await</code>不会阻塞当前的线程，而是异步地等待该future的完成，使得当这个future没有进展时其他任务仍然可以运行。</p>
+<p>举个例子，假设有三个<code>async fn</code>：<code>learn_song</code>，<code>sing_song</code>，和<code>dance</code>：</p>
+<pre><code class="language-rust ignore">async fn learn_song() -&gt; Song { /* ... */ }
+async fn sing_song(song: Song) { /* ... */ }
+async fn dance() { /* ... */ }
+</code></pre>
+<p>一种方式是令learn，sing和dance分别被阻塞：</p>
+<pre><code class="language-rust ignore">fn main() {
+    let song = block_on(learn_song());
+    block_on(sing_song(song));
+    block_on(dance());
+}
+</code></pre>
+<p>但这远非最好的方式——因为一次只能做一件事！显然要想sing，我们就必须先learn song，而dance是可以与learn和sing同时进行的。要这样做的话，可以创建两个可并行运行的<code>async fn</code>：</p>
+<pre><code class="language-rust ignore">async fn learn_and_sing() {
+    // Wait until the song has been learned before singing it.
+    // We use `.await` here rather than `block_on` to prevent blocking the
+    // thread, which makes it possible to `dance` at the same time.
+    let song = learn_song().await;
+    sing_song(song).await;
+}
+
+async fn async_main() {
+    let f1 = learn_and_sing();
+    let f2 = dance();
+
+    // `join!` is like `.await` but can wait for multiple futures concurrently.
+    // If we're temporarily blocked in the `learn_and_sing` future, the `dance`
+    // future will take over the current thread. If `dance` becomes blocked,
+    // `learn_and_sing` can take back over. If both futures are blocked, then
+    // `async_main` is blocked and will yield to the executor.
+    futures::join!(f1, f2);
+}
+
+fn main() {
+    block_on(async_main());
+}
+</code></pre>
+<p>在这个例子中，learn song一定会发生在sing song之前，但是learn和sing都可以和dance同时进行。如果我们在<code>learn_and_sing</code>中使用<code>block_on(learn_song())</code>而非<code>learn_song().await</code>，线程就不能在<code>learn_song</code>的同时做其他的事情了。(后者)使得我们可以同时进行<code>dance</code>。通过<code>.await</code> <code>learn_song</code>的future，我们让其他的任务可在<code>learn_song</code>被阻塞时接管当前线程，这样就能在同一线程上并发运行多个future直至其完成了。</p>
+<p>现在你已经学习到了<code>async</code>/<code>await</code>的基础知识了，来个例子试试吧。</p>
+<h1><a class="header" href="#应用简单的http-server" id="应用简单的http-server">应用：简单的HTTP Server</a></h1>
+<p>来用<code>async</code>/<code>await</code>创建一个回显服务器吧！</p>
+<p>首先，使用<code>rustup update stable</code>来确保你在使用Rust 1.39或者更新的版本。完成后，再输入<code>cargo new async-await-echo</code>来创建一个新项目，打开<code>async-await-echo</code>的文件夹。</p>
+<p>在<code>Cargo.toml</code>中添加依赖：</p>
+<pre><code class="language-toml">[dependencies]
+# Hyper is an asynchronous HTTP library. We'll use it to power our HTTP
+# server and to make HTTP requests.
+hyper = &quot;0.13&quot;
+# To setup some sort of runtime needed by Hyper, we will use the Tokio runtime.
+tokio = { version = &quot;0.2&quot;, features = [&quot;full&quot;] }
+
+# (only for testing)
+anyhow = &quot;1.0.31&quot;
+reqwest = { version = &quot;0.10.4&quot;, features = [&quot;blocking&quot;] }
+</code></pre>
+<p>解决了依赖问题后，就写点代码吧。先添加必要的import：</p>
+<pre><code class="language-rust ignore">use {
+    hyper::{
+        // Following functions are used by Hyper to handle a `Request`
+        // and returning a `Response` in an asynchronous manner by using a Future
+        service::{make_service_fn, service_fn},
+        // Miscellaneous types from Hyper for working with HTTP.
+        Body,
+        Client,
+        Request,
+        Response,
+        Server,
+        Uri,
+    },
+    std::net::SocketAddr,
+};
+</code></pre>
+<p>之后，再加入用于处理请求的模板：</p>
+<pre><code class="language-rust ignore">async fn serve_req(_req: Request&lt;Body&gt;) -&gt; Result&lt;Response&lt;Body&gt;, hyper::Error&gt; {
+    // Always return successfully with a response containing a body with
+    // a friendly greeting ;)
+    Ok(Response::new(Body::from(&quot;hello, world!&quot;)))
+}
+
+async fn run_server(addr: SocketAddr) {
+    println!(&quot;Listening on http://{}&quot;, addr);
+
+    // Create a server bound on the provided address
+    let serve_future = Server::bind(&amp;addr)
+        // Serve requests using our `async serve_req` function.
+        // `serve` takes a type which implements the `MakeService` trait.
+        // `make_service_fn` converts a closure into a type which
+        // implements the `MakeService` trait. That closure must return a
+        // type that implements the `Service` trait, and `service_fn`
+        // converts a request-response function into a type that implements
+        // the `Service` trait.
+        .serve(make_service_fn(|_| async {
+            Ok::&lt;_, hyper::Error&gt;(service_fn(serve_req))
+        }));
+
+    // Wait for the server to complete serving or exit with an error.
+    // If an error occurred, print it to stderr.
+    if let Err(e) = serve_future.await {
+        eprintln!(&quot;server error: {}&quot;, e);
+    }
+}
+
+#[tokio::main]
+async fn main() {
+  // Set the address to run our socket on.
+  let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+
+  // Call our `run_server` function, which returns a future.
+  // As with every `async fn`, for `run_server` to do anything,
+  // the returned future needs to be run using `await`;
+  run_server(addr).await;
+}
+</code></pre>
+<p>现在<code>cargo run</code>的话，终端里应该会显示 &quot;Listening on http://127.0.0.1:3000&quot; 的信息。若在浏览器中打开，就能看到其显示 &quot;hello, world!&quot;。恭喜！你刚刚写出了你的第一个异步的Rust webserver。</p>
+<p>看一看请求的内容，就会发现它包含了请求的URI、HTTP版本号、请求头和其他的元数据一类的信息。可以这样直接输出请求的URI：</p>
+<pre><code class="language-rust ignore">println!(&quot;Got request at {:?}&quot;, _req.uri());
+</code></pre>
+<p>可能你已经注意到了，在处理请求时我们并没有以异步的方式进行——我们只是立即进行响应，因此没能充分使用<code>async fn</code>的便利。比起仅仅返回一个静态的消息，来试试用Hyper的HTTP client来代理用户请求吧。</p>
+<p>首先要解析请求的URL：</p>
+<pre><code class="language-rust ignore">        let url_str = &quot;http://www.rust-lang.org/en-US/&quot;;
+        let url = url_str.parse::&lt;Uri&gt;().expect(&quot;failed to parse URL&quot;);
+</code></pre>
+<p>然后创建一个新的<code>hyper::Client</code>，用它来发起一个<code>GET</code>请求，并将响应返回给用户：</p>
+<pre><code class="language-rust ignore">        let res = Client::new().get(url).await?;
+        // Return the result of the request directly to the user
+        println!(&quot;request finished-- returning response&quot;);
+        Ok(res)
+</code></pre>
+<p><code>Client::get</code>会返回一个<code>hyper::client::ResponseFuture</code>，其实现为<code>Future&lt;Output = Result&lt;Response&lt;Body&gt;&gt;&gt;</code>(在future 0.1阶段为<code>Future&lt;Item = Response&lt;Body&gt;, Error = Error&gt;</code>)。当对该future使用<code>.await</code>时，就发送了一个HTTP请求，且当前任务被挂起到队列中，直到有可用的响应。</p>
+<p>现在再<code>cargo run</code>并在浏览器中打开<code>http://127. 0.0.1:3000/foo</code>，就会看到Rust的主页，终端中有如下输出：</p>
+<pre><code>Listening on http://127.0.0.1:3000
+Got request at /foo
+making request to http://www.rust-lang.org/en-US/
+request finished-- returning response
+</code></pre>
+<p>庆贺吧！这样就成功地代理了一个HTTP请求。</p>
+<h1><a class="header" href="#底层探索future的执行和任务tasks" id="底层探索future的执行和任务tasks">底层探索：<code>Future</code>的执行和任务(<em>Tasks</em>)</a></h1>
+<p>在这一节中，我们将会涉及到<code>Future</code>和异步任务在底层的调度过程。如果你只是对如何使用<code>Future</code>编写上层的代码感兴趣，而不是<code>Future</code>类型如何工作的细节，就可以跳到<code>async</code>/<code>await</code>那章了。不过这章中讨论的话题对于理解<code>async</code>/<code>await</code>的代码如何工作、其运行时和性能属性以及如何创建新的异步原语都很有帮助。如果你确定要跳过这一节，建议你在此留下书签，以便将来再看。</p>
+<p>现在来说一说<code>Future</code>trait的事情吧。</p>
+<h1><a class="header" href="#future-trait" id="future-trait"><code>Future</code> Trait</a></h1>
+<p><code>Future</code>trait是Rust异步编程的核心。一个<code>Future</code>就是一个能够产生值的异步计算过程(即便值可以为空，如<code>()</code>)。下面是一个简化版的future trait：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait SimpleFuture {
+    type Output;
+    fn poll(&amp;mut self, wake: fn()) -&gt; Poll&lt;Self::Output&gt;;
+}
+
+enum Poll&lt;T&gt; {
+    Ready(T),
+    Pending,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>可通过调用<code>poll</code>函数来提前执行future，以让future尽早完成。在future完成后，会返回<code>Poll::Ready(result)</code>。若future尚未完成，则会返回<code>Poll::Pending</code>并设置<code>Future</code>有进展时要调用的<code>wake()</code>函数。当<code>wake()</code>被调用时，用于驱动<code>Future</code>的executor会再次调用<code>poll</code>以便使<code>Future</code>能够继续进行。</p>
+<p>如果没有<code>wake()</code>，executor就无从得知是否有某个future取得进展，而不得不对future进行轮询。通过<code>wake()</code>，executor就能准确得知哪个future准备好被<code>poll</code>了。</p>
+<p>考虑这样的情况，我们需要从一个可能有数据，也可能没有数据的socket中进行读取内容。如果有可用的数据，就可以读取它并返回<code>Poll::Ready(data)</code>，但若数据尚未准备好，future就会被阻塞，不再有进展。当这种情况发生时，我们就得注册(<em>register</em>)当数据准备好时要调用的<code>wake</code>，它会告知executor，该future已经准备好继续进行了。一个简单的<code>SocketRead</code>future如下：</p>
+<pre><code class="language-rust ignore">pub struct SocketRead&lt;'a&gt; {
+    socket: &amp;'a Socket,
+}
+
+impl SimpleFuture for SocketRead&lt;'_&gt; {
+    type Output = Vec&lt;u8&gt;;
+
+    fn poll(&amp;mut self, wake: fn()) -&gt; Poll&lt;Self::Output&gt; {
+        if self.socket.has_data_to_read() {
+            // The socket has data-- read it into a buffer and return it.
+            Poll::Ready(self.socket.read_buf())
+        } else {
+            // The socket does not yet have data.
+            //
+            // Arrange for `wake` to be called once data is available.
+            // When data becomes available, `wake` will be called, and the
+            // user of this `Future` will know to call `poll` again and
+            // receive data.
+            self.socket.set_readable_callback(wake);
+            Poll::Pending
+        }
+    }
+}
+</code></pre>
+<p>这种基于<code>Future</code>的模型使得我们不依赖中间的分配(<em>intermediate allocations</em>)即可组织多个异步的行为。运行多个future或chaining futures可通过免分配状态机实现：</p>
+<pre><code class="language-rust ignore">/// A SimpleFuture that runs two other futures to completion concurrently.
+///
+/// Concurrency is achieved via the fact that calls to `poll` each future
+/// may be interleaved, allowing each future to advance itself at its own pace.
+pub struct Join&lt;FutureA, FutureB&gt; {
+    // Each field may contain a future that should be run to completion.
+    // If the future has already completed, the field is set to `None`.
+    // This prevents us from polling a future after it has completed, which
+    // would violate the contract of the `Future` trait.
+    a: Option&lt;FutureA&gt;,
+    b: Option&lt;FutureB&gt;,
+}
+
+impl&lt;FutureA, FutureB&gt; SimpleFuture for Join&lt;FutureA, FutureB&gt;
+where
+    FutureA: SimpleFuture&lt;Output = ()&gt;,
+    FutureB: SimpleFuture&lt;Output = ()&gt;,
+{
+    type Output = ();
+    fn poll(&amp;mut self, wake: fn()) -&gt; Poll&lt;Self::Output&gt; {
+        // Attempt to complete future `a`.
+        if let Some(a) = &amp;mut self.a {
+            if let Poll::Ready(()) = a.poll(wake) {
+                self.a.take();
+            }
+        }
+
+        // Attempt to complete future `b`.
+        if let Some(b) = &amp;mut self.b {
+            if let Poll::Ready(()) = b.poll(wake) {
+                self.b.take();
+            }
+        }
+
+        if self.a.is_none() &amp;&amp; self.b.is_none() {
+            // Both futures have completed-- we can return successfully
+            Poll::Ready(())
+        } else {
+            // One or both futures returned `Poll::Pending` and still have
+            // work to do. They will call `wake()` when progress can be made.
+            Poll::Pending
+        }
+    }
+}
+</code></pre>
+<p>这个例子展示了如何在不分别分配任务的情况下，使多个future共同运行以提高效率。类似地，多个顺序future也可以接连运行，就像这样：</p>
+<pre><code class="language-rust ignore">/// A SimpleFuture that runs two futures to completion, one after another.
+//
+// Note: for the purposes of this simple example, `AndThenFut` assumes both
+// the first and second futures are available at creation-time. The real
+// `AndThen` combinator allows creating the second future based on the output
+// of the first future, like `get_breakfast.and_then(|food| eat(food))`.
+pub struct AndThenFut&lt;FutureA, FutureB&gt; {
+    first: Option&lt;FutureA&gt;,
+    second: FutureB,
+}
+
+impl&lt;FutureA, FutureB&gt; SimpleFuture for AndThenFut&lt;FutureA, FutureB&gt;
+where
+    FutureA: SimpleFuture&lt;Output = ()&gt;,
+    FutureB: SimpleFuture&lt;Output = ()&gt;,
+{
+    type Output = ();
+    fn poll(&amp;mut self, wake: fn()) -&gt; Poll&lt;Self::Output&gt; {
+        if let Some(first) = &amp;mut self.first {
+            match first.poll(wake) {
+                // We've completed the first future-- remove it and start on
+                // the second!
+                Poll::Ready(()) =&gt; self.first.take(),
+                // We couldn't yet complete the first future.
+                Poll::Pending =&gt; return Poll::Pending,
+            };
+        }
+        // Now that the first future is done, attempt to complete the second.
+        self.second.poll(wake)
+    }
+}
+</code></pre>
+<p>这些例子展示了<code>Future</code>trait是如何用于表达异步控制流，而不需借助多个分配对象和多级嵌套回调。解决了基础的控制流问题，现在来说说和实际的<code>Future</code>trait的不同之处吧。</p>
+<pre><code class="language-rust ignore">trait Future {
+    type Output;
+    fn poll(
+        // Note the change from `&amp;mut self` to `Pin&lt;&amp;mut Self&gt;`:
+        self: Pin&lt;&amp;mut Self&gt;,
+        // and the change from `wake: fn()` to `cx: &amp;mut Context&lt;'_&gt;`:
+        cx: &amp;mut Context&lt;'_&gt;,
+    ) -&gt; Poll&lt;Self::Output&gt;;
+}
+</code></pre>
+<p>第一处变动是<code>self</code>的类型不再是<code>&amp;mut Self</code>，而是变成了<code>Pin&lt;&amp;mut Self&gt;</code>。我们会在 <a href="02_execution/../04_pinning/01_chapter.html">之后的章节</a>中讨论固定(<em>pinning</em>)的内容，现在只要知道，它能让我们创建不能变动内容(<em>immovable</em>)的future就行了。这种对象能够存储其各字段的指针，比如<code>struct MyFut { a: i32, ptr_to_a: *const i32 }</code>。固定在<code>async</code>/<code>.await</code>的实现中非常有用。</p>
+<p>其次，<code>wake: fn()</code>变成了<code>&amp;mut Context&lt;'_&gt;</code>。在<code>SimpleFuture</code>中，我们通过调用一个函数指针(<code>fn()</code>)来告知future的executor，这个future需要被轮询。但是因为<code>fn()</code>只是一个函数指针，它不能储存在<code>Future</code>中被称为<code>wake</code>的数据。</p>
+<p>在现实中，像web服务器这样的复杂应用可能会有上千个不同连接，而这些连接的唤醒状况也需要分别管理。<code>Context</code>类型通过提供一个<code>Waker</code>类型值来解决这个问题，这个值能够用于唤醒一个具体的任务(<em>task</em>)。</p>
+<h1><a class="header" href="#通过waker唤醒task" id="通过waker唤醒task">通过<code>Waker</code>唤醒Task</a></h1>
+<p>future在第一次被<code>poll</code>时尚未完成相当常见。此时，future需要确保它在有新进展时能够再次被轮询到，可通过<code>Waker</code>类型来实现。</p>
+<p>每次一个future被轮询时，其实是作为一个&quot;task&quot;的一部分来进行的。task是被提交给executor的各个上层future。</p>
+<p><code>Waker</code>提供了一个<code>wake()</code>方法，能够用于告知executor其关联的task需被唤醒。当<code>wake()</code>被调用时，executor就知道与<code>Waker</code>关联的task已有进展，而future则会再次被轮询。</p>
+<p><code>Waker</code>也实现了<code>clone()</code>，因此它可被复制再储存。</p>
+<p>来试试通过<code>Waker</code>实现一个简单的定时器吧。</p>
+<h2><a class="header" href="#应用创建定时器" id="应用创建定时器">应用：创建定时器</a></h2>
+<p>由于只是作为例子，我们要做的就是在定时器创建时开辟一条新的线程，使其休眠所需的时间，然后在时间窗口结束时向计时器发出信号。</p>
+<p>这是开始时要添加的import：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use {
+    std::{
+        future::Future,
+        pin::Pin,
+        sync::{Arc, Mutex},
+        task::{Context, Poll, Waker},
+        thread,
+        time::Duration,
+    },
+};
+<span class="boring">}
+</span></code></pre></pre>
+<p>首先要定义future类型。future需要一个方法来告知线程：定时器时间已到，本future需要被完成。于是用一个共享的<code>Arc&lt;Mutex&lt;..&gt;&gt;</code>值来使线程和future进行交流。</p>
+<pre><code class="language-rust ignore">pub struct TimerFuture {
+    shared_state: Arc&lt;Mutex&lt;SharedState&gt;&gt;,
+}
+
+/// Shared state between the future and the waiting thread
+struct SharedState {
+    /// Whether or not the sleep time has elapsed
+    completed: bool,
+
+    /// The waker for the task that `TimerFuture` is running on.
+    /// The thread can use this after setting `completed = true` to tell
+    /// `TimerFuture`'s task to wake up, see that `completed = true`, and
+    /// move forward.
+    waker: Option&lt;Waker&gt;,
+}
+</code></pre>
+<p>现在来编写<code>Future</code>的具体实现吧！</p>
+<pre><code class="language-rust ignore">impl Future for TimerFuture {
+    type Output = ();
+    fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt; {
+        // Look at the shared state to see if the timer has already completed.
+        let mut shared_state = self.shared_state.lock().unwrap();
+        if shared_state.completed {
+            Poll::Ready(())
+        } else {
+            // Set waker so that the thread can wake up the current task
+            // when the timer has completed, ensuring that the future is polled
+            // again and sees that `completed = true`.
+            //
+            // It's tempting to do this once rather than repeatedly cloning
+            // the waker each time. However, the `TimerFuture` can move between
+            // tasks on the executor, which could cause a stale waker pointing
+            // to the wrong task, preventing `TimerFuture` from waking up
+            // correctly.
+            //
+            // N.B. it's possible to check for this using the `Waker::will_wake`
+            // function, but we omit that here to keep things simple.
+            shared_state.waker = Some(cx.waker().clone());
+            Poll::Pending
+        }
+    }
+}
+</code></pre>
+<p>是不是很简单？当线程设置<code>shared_state.completed = true</code>时，就完成了！否则，我们就从当前的task把<code>Waker</code>进行clone，并传递至<code>shared_state.waker</code>，这样线程就能唤醒task了。</p>
+<p>重要的是，每次future被轮询都要对<code>Waker</code>进行更新，因为future可能已经转移至另一个有不同<code>Waker</code>的task中了。这可能发生在future在被轮询后，在不同task间传递的过程中。</p>
+<p>最后是用于构造计时器和启动线程的API：</p>
+<pre><code class="language-rust ignore">impl TimerFuture {
+    /// Create a new `TimerFuture` which will complete after the provided
+    /// timeout.
+    pub fn new(duration: Duration) -&gt; Self {
+        let shared_state = Arc::new(Mutex::new(SharedState {
+            completed: false,
+            waker: None,
+        }));
+
+        // Spawn the new thread
+        let thread_shared_state = shared_state.clone();
+        thread::spawn(move || {
+            thread::sleep(duration);
+            let mut shared_state = thread_shared_state.lock().unwrap();
+            // Signal that the timer has completed and wake up the last
+            // task on which the future was polled, if one exists.
+            shared_state.completed = true;
+            if let Some(waker) = shared_state.waker.take() {
+                waker.wake()
+            }
+        });
+
+        TimerFuture { shared_state }
+    }
+}
+</code></pre>
+<p>这就是创建一个简单的计时器future的全过程了。现在，只差一个用于运行future的executor了。</p>
+<h1><a class="header" href="#应用创建executor" id="应用创建executor">应用：创建Executor</a></h1>
+<p>Rust中的<code>Future</code>是惰性(<em>lazy</em>)的：除非受到主动驱动而被完成，否则不会做任何事。一种驱动方式是在<code>async</code>函数中使用<code>.await</code>，但是这样只是继续向上层抛出了问题：最终是由谁来运行最顶层的<code>async</code>函数返回的future呢？答案就是，我们需要一个<code>Future</code>的executor。</p>
+<p><code>Future</code>的executor会获取一系列的上层<code>Future</code>并将它们运行至完成，是通过在<code>Future</code>有进展时，调用<code>poll</code>的方式来进行的。一般来说，在一个future开始后，executor就会连续对其进行<code>poll</code>。当<code>Future</code>通过调用<code>wake()</code>来表明，它们已经准备好继续进行 时，就会被放回一个队列中，并再次调用<code>poll</code>，如此重复进行直到<code>Future</code>完成。</p>
+<p>在这节中，我们要编写一个简单的，负责并发运行大量上层future直到它们完成的executor。</p>
+<p>此例子中，我们要用到<code>futures</code>crate中的<code>ArcWake</code>trait，这个trait能提供一个更简便的方法来构造一个<code>Waker</code>。</p>
+<pre><code class="language-toml">[package]
+name = &quot;xyz&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;XYZ Author&quot;]
+edition = &quot;2018&quot;
+
+[dependencies]
+futures = &quot;0.3&quot;
+</code></pre>
+<p>接下来，在<code>src/main.rs</code>中添加如下import：</p>
+<pre><code class="language-rust ignore">use {
+    futures::{
+        future::{FutureExt, BoxFuture},
+        task::{ArcWake, waker_ref},
+    },
+    std::{
+        future::Future,
+        sync::{Arc, Mutex},
+        sync::mpsc::{sync_channel, SyncSender, Receiver},
+        task::{Context, Poll},
+        time::Duration,
+    },
+    // The timer we wrote in the previous section:
+    timer_future::TimerFuture,
+};
+</code></pre>
+<p>我们的executor会通过使task在通道(<em>channel</em>)中运行来工作。executor会从通道中取出事件(<em>event</em>)并运行之。当一个task准备好继续工作时(即被唤醒)，就可以通过将自身放回通道的方式来进行调度，使自身再次被轮询(<em>poll</em>)。</p>
+<p>在这种设计中，executor只需要保存task通道的接收端。用户会获得发送端，这样他们就能创建新的future了。至于task，就是能够重新调度自身的future。因此我们将其以一个搭配了sender的future的形式存储，以使task能够通过sender来重新使自身进入(管道的)队列。</p>
+<pre><code class="language-rust ignore">/// Task executor that receives tasks off of a channel and runs them.
+struct Executor {
+    ready_queue: Receiver&lt;Arc&lt;Task&gt;&gt;,
+}
+
+/// `Spawner` spawns new futures onto the task channel.
+#[derive(Clone)]
+struct Spawner {
+    task_sender: SyncSender&lt;Arc&lt;Task&gt;&gt;,
+}
+
+/// A future that can reschedule itself to be polled by an `Executor`.
+struct Task {
+    /// In-progress future that should be pushed to completion.
+    ///
+    /// The `Mutex` is not necessary for correctness, since we only have
+    /// one thread executing tasks at once. However, Rust isn't smart
+    /// enough to know that `future` is only mutated from one thread,
+    /// so we need use the `Mutex` to prove thread-safety. A production
+    /// executor would not need this, and could use `UnsafeCell` instead.
+    future: Mutex&lt;Option&lt;BoxFuture&lt;'static, ()&gt;&gt;&gt;,
+
+    /// Handle to place the task itself back onto the task queue.
+    task_sender: SyncSender&lt;Arc&lt;Task&gt;&gt;,
+}
+
+fn new_executor_and_spawner() -&gt; (Executor, Spawner) {
+    // Maximum number of tasks to allow queueing in the channel at once.
+    // This is just to make `sync_channel` happy, and wouldn't be present in
+    // a real executor.
+    const MAX_QUEUED_TASKS: usize = 10_000;
+    let (task_sender, ready_queue) = sync_channel(MAX_QUEUED_TASKS);
+    (Executor { ready_queue }, Spawner { task_sender })
+}
+</code></pre>
+<p>还得在(future的)生成器(<em>spawner</em>)中添加一个能让其创建新future的方法。这个方法会接受一个future类型的参数，把它装箱(<em>box it</em>)，并创建一个包含装箱结果的<code>Arc&lt;Task&gt;</code>，这样future就可以进入executor的(管道的)队列了。</p>
+<pre><code class="language-rust ignore">impl Spawner {
+    fn spawn(&amp;self, future: impl Future&lt;Output = ()&gt; + 'static + Send) {
+        let future = future.boxed();
+        let task = Arc::new(Task {
+            future: Mutex::new(Some(future)),
+            task_sender: self.task_sender.clone(),
+        });
+        self.task_sender.send(task).expect(&quot;too many tasks queued&quot;);
+    }
+}
+</code></pre>
+<p>为了对future进行轮询，还需要创建一个<code>Waker</code>。如同在<a href="02_execution/./03_wakeups.html">task唤醒</a>那一节中所讨论的，<code>Waker</code>负责在<code>wake</code>被调用时，再次调度task使之被轮询。<code>Waker</code>会告知executor哪一个task已经就绪，并允许它们再次轮询已经准备好继续运行的那些future。最简单的创建<code>Waker</code>的方法就是实现<code>ArcWake</code>trait再使用<code>waker_ref</code>或<code>.into_waker()</code>函数来将<code>Arc&lt;impl ArcWake&gt;</code>转换为<code>Waker</code>。下面为我们的task实现了<code>ArcWake</code>，使之能够转换为<code>Waker</code>和被唤醒：</p>
+<pre><code class="language-rust ignore">impl ArcWake for Task {
+    fn wake_by_ref(arc_self: &amp;Arc&lt;Self&gt;) {
+        // Implement `wake` by sending this task back onto the task channel
+        // so that it will be polled again by the executor.
+        let cloned = arc_self.clone();
+        arc_self.task_sender.send(cloned).expect(&quot;too many tasks queued&quot;);
+    }
+}
+</code></pre>
+<p>当从<code>Arc&lt;Task&gt;</code>创建一个<code>Waker</code>时，调用<code>wake()</code>会将一份<code>Arc</code>的拷贝送入task的通道。我们的executor只需要取出它并对其进行轮询。实现如下：</p>
+<pre><code class="language-rust ignore">impl Executor {
+    fn run(&amp;self) {
+        while let Ok(task) = self.ready_queue.recv() {
+            // Take the future, and if it has not yet completed (is still Some),
+            // poll it in an attempt to complete it.
+            let mut future_slot = task.future.lock().unwrap();
+            if let Some(mut future) = future_slot.take() {
+                // Create a `LocalWaker` from the task itself
+                let waker = waker_ref(&amp;task);
+                let context = &amp;mut Context::from_waker(&amp;*waker);
+                // `BoxFuture&lt;T&gt;` is a type alias for
+                // `Pin&lt;Box&lt;dyn Future&lt;Output = T&gt; + Send + 'static&gt;&gt;`.
+                // We can get a `Pin&lt;&amp;mut dyn Future + Send + 'static&gt;`
+                // from it by calling the `Pin::as_mut` method.
+                if let Poll::Pending = future.as_mut().poll(context) {
+                    // We're not done processing the future, so put it
+                    // back in its task to be run again in the future.
+                    *future_slot = Some(future);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>恭喜！现在我们就有了一个可工作的future的executor。我们甚至可以用它来运行<code>async</code>/<code>.await</code>的代码和自定义的future，比如我们之前编写的<code>TimerFuture</code>：</p>
+<pre><code class="language-rust edition2018 ignore">fn main() {
+    let (executor, spawner) = new_executor_and_spawner();
+
+    // Spawn a task to print before and after waiting on a timer.
+    spawner.spawn(async {
+        println!(&quot;howdy!&quot;);
+        // Wait for our timer future to complete after two seconds.
+        TimerFuture::new(Duration::new(2, 0)).await;
+        println!(&quot;done!&quot;);
+    });
+
+    // Drop the spawner so that our executor knows it is finished and won't
+    // receive more incoming tasks to run.
+    drop(spawner);
+
+    // Run the executor until the task queue is empty.
+    // This will print &quot;howdy!&quot;, pause, and then print &quot;done!&quot;.
+    executor.run();
+}
+</code></pre>
+<h1><a class="header" href="#executor和系统io" id="executor和系统io">Executor和系统IO</a></h1>
+<p>在之前的<a href="02_execution/./02_future.html"><code>Future</code>trait</a>一节中，我们讨论了这个从socket异步读取的future例子：</p>
+<pre><code class="language-rust ignore">pub struct SocketRead&lt;'a&gt; {
+    socket: &amp;'a Socket,
+}
+
+impl SimpleFuture for SocketRead&lt;'_&gt; {
+    type Output = Vec&lt;u8&gt;;
+
+    fn poll(&amp;mut self, wake: fn()) -&gt; Poll&lt;Self::Output&gt; {
+        if self.socket.has_data_to_read() {
+            // The socket has data-- read it into a buffer and return it.
+            Poll::Ready(self.socket.read_buf())
+        } else {
+            // The socket does not yet have data.
+            //
+            // Arrange for `wake` to be called once data is available.
+            // When data becomes available, `wake` will be called, and the
+            // user of this `Future` will know to call `poll` again and
+            // receive data.
+            self.socket.set_readable_callback(wake);
+            Poll::Pending
+        }
+    }
+}
+</code></pre>
+<p>这个future会从socket中读取可用数据，如果没有可用数据，就让出到executor，并请求在socket可读时再被唤醒。但是通过这个例子还是没有说清楚<code>Socket</code>类型是如何实现的，特别是<code>set_readable_callback</code>这个函数的工作方式。现在的问题是，如何令<code>wake()</code>在socket可用时立即被调用？一个选项是通过一条线程不停检查<code>socket</code>是否可读，并在合适的时候调用<code>wake()</code>，不过这么干效率太低了，因为每一个被阻塞的IO future都得有一条单独的线程。</p>
+<p>实际上，这个问题是通过内置的IO感知系统阻塞原语(<em>IO-aware system blocking primitive</em>)来解决的，比如Linux的<code>epoll</code>，FreeBSD/Mac OS/IOCP on Windows的<code>kqueue</code>以及Fuchsia的<code>port</code>(这些都在Rust的跨平台crate<a href="https://github.com/tokio-rs/mio"><code>mio</code></a>里得以暴露)。这些原语都允许一个线程在多个异步IO事件中阻塞，当其中一个事件完成了就返回。API看上去是这样的：</p>
+<pre><code class="language-rust ignore">struct IoBlocker {
+    /* ... */
+}
+
+struct Event {
+    // 一个用于识别和监听特定事件的ID
+    id: usize,
+
+    // 一个需等待或已完成signal的集合
+    signals: Signals,
+}
+
+impl IoBlocker {
+    /// 创建一系列要阻塞的异步IO事件
+    fn new() -&gt; Self { /* ... */ }
+
+    /// 表示对特定IO事件的关注
+    fn add_io_event_interest(
+        &amp;self,
+
+        /// 事件发生时依附的对象
+        io_object: &amp;IoObject,
+		/// 为驱动事件，需要在 `io_object`中设置一系列signal
+		/// 并与给出的ID搭配工作
+        event: Event,
+    ) { /* ... */ }
+
+    /// 阻塞并等待事件发生
+    fn block(&amp;self) -&gt; Event { /* ... */ }
+}
+
+let mut io_blocker = IoBlocker::new();
+io_blocker.add_io_event_interest(
+    &amp;socket_1,
+    Event { id: 1, signals: READABLE },
+);
+io_blocker.add_io_event_interest(
+    &amp;socket_2,
+    Event { id: 2, signals: READABLE | WRITABLE },
+);
+let event = io_blocker.block();
+
+// 在某socket可用时输出&quot;Socket 1 is now READABLE&quot;的字样
+println!(&quot;Socket {:?} is now {:?}&quot;, event.id, event.signals);
+</code></pre>
+<p>Future的executor能够利用这些原语来提供异步IO对象，比如能够为socket配置当特定IO事件发生时，要运行的回调函数。在上面<code>SocketRead</code>的例子中，<code>Socket::set_readable_callback</code>的伪代码如下：</p>
+<pre><code class="language-rust ignore">impl Socket {
+    fn set_readable_callback(&amp;self, waker: Waker) {
+    	// `local_executor`是一个对本地executor的引用，能用于socket的创建
+    	// 但在实际应用中，为了方便起见，在很多executor实现中
+    	// 都会将其传递至线程的本地存储
+        let local_executor = self.local_executor;
+
+        // 为IO对象设置唯一ID
+        let id = self.id;
+        
+		// 在executor的map中存储本地waker
+		// 以使其能在IO事件到来时被调用
+        local_executor.event_map.insert(id, waker);
+        local_executor.add_io_event_interest(
+            &amp;self.socket_file_descriptor,
+            Event { id, signals: READABLE },
+        );
+    }
+}
+</code></pre>
+<p>现在就有一个能和<code>Waker</code>收发IO事件的executor线程了，能唤醒响应task，让executor能在返回处理其他IO事件(继续循环)前，驱动更多的task完成。</p>
+<h1><a class="header" href="#asyncawait" id="asyncawait"><code>async</code>/<code>.await</code></a></h1>
+<p>在 <a href="03_async_await/../01_getting_started/04_async_await_primer.html">第一章</a>中我们简单领略了下<code>async</code>/<code>await</code>并用它们建立了一个简单的服务器。这一章会更深入地讨论<code>async</code>/<code>.await</code>的细节，解释它们如何工作，而<code>async</code>代码和传统的Rust程序又有怎样的不同。</p>
+<p><code>async</code>/<code>.await</code>是使让出当前线程的控制权而非阻塞成为可能的语法，让程序可以在等待某个行为完成的同时允许其他代码运行。</p>
+<p>有两个使用<code>async</code>的主要方法：<code>async fn</code>和<code>async</code>块(<em>block</em>)。它们都会返回一个实现了<code>Future</code>trait的值：</p>
+<pre><code class="language-rust edition2018 ignore">
+// `foo()` returns a type that implements `Future&lt;Output = u8&gt;`.
+// `foo().await` will result in a value of type `u8`.
+async fn foo() -&gt; u8 { 5 }
+
+fn bar() -&gt; impl Future&lt;Output = u8&gt; {
+    // This `async` block results in a type that implements
+    // `Future&lt;Output = u8&gt;`.
+    async {
+        let x: u8 = foo().await;
+        x + 5
+    }
+}
+</code></pre>
+<p>正如我们在第一章中看到的，<code>async</code>的主体和其他future都是惰性的：直到运行前都不会做任何事。运行一个<code>Future</code>最简单的方法就是<code>.await</code>它。当对<code>Future</code>调用<code>.await</code>时，会试图将Future运行到完成状态。如果<code>Future</code>阻塞了，就让出当前线程的控制权。而可以继续执行时，<code>Future</code>就会被executor取出并回复运行，让<code>.await</code>得以解析(<em>resolve</em>)。</p>
+<h2><a class="header" href="#async-生命周期" id="async-生命周期"><code>async</code> 生命周期</a></h2>
+<p>与普通函数不同，获取引用或其他非<code>'static</code>参数的<code>async fn</code>会返回一个受参数声明周期约束的<code>Future</code>。</p>
+<pre><code class="language-rust edition2018 ignore">// This function:
+async fn foo(x: &amp;u8) -&gt; u8 { *x }
+
+// Is equivalent to this function:
+fn foo_expanded&lt;'a&gt;(x: &amp;'a u8) -&gt; impl Future&lt;Output = u8&gt; + 'a {
+    async move { *x }
+}
+</code></pre>
+<p>这意味着<code>async fn</code>返回的future必须 在其非<code>'static</code>参数还有效时 被<code>.await</code>。一般情况下，在调用函数后立即<code>.await</code>其返回的future(比如<code>foo(&amp;x).await</code>)没有问题。但是如果 保存了此future 或 将其发送给了另一个task或线程，就可能出问题。</p>
+<p>一个将含引用参数的<code>async fn</code>转化为<code>'static</code>future的常见方案是，将参数及其调用打包在<code>async fn</code>内部的一个<code>async</code>块中：</p>
+<pre><code class="language-rust edition2018 ignore">fn bad() -&gt; impl Future&lt;Output = u8&gt; {
+    let x = 5;
+    borrow_x(&amp;x) // ERROR: `x` does not live long enough
+}
+
+fn good() -&gt; impl Future&lt;Output = u8&gt; {
+    async {
+        let x = 5;
+        borrow_x(&amp;x).await
+    }
+}
+</code></pre>
+<p>通过将参数移入<code>async</code>块中，我们延长了它的生命周期，使得它匹配了调用<code>call</code>时返回的<code>Future</code>(的生命周期)。</p>
+<h2><a class="header" href="#async-move" id="async-move"><code>async move</code></a></h2>
+<p>可以对<code>async</code>块和闭包使用<code>move</code>关键字，就跟普通的闭包一样。<code>async move</code>块会获取其引用变量的所有权，使得该变量能够在当前作用域外留存，但是失去了与其他部分代码共享自身的能力：</p>
+<pre><code class="language-rust edition2018 ignore">/// `async` block:
+///
+/// Multiple different `async` blocks can access the same local variable
+/// so long as they're executed within the variable's scope
+async fn blocks() {
+    let my_string = &quot;foo&quot;.to_string();
+
+    let future_one = async {
+        // ...
+        println!(&quot;{}&quot;, my_string);
+    };
+
+    let future_two = async {
+        // ...
+        println!(&quot;{}&quot;, my_string);
+    };
+
+    // Run both futures to completion, printing &quot;foo&quot; twice:
+    let ((), ()) = futures::join!(future_one, future_two);
+}
+
+/// `async move` block:
+///
+/// Only one `async move` block can access the same captured variable, since
+/// captures are moved into the `Future` generated by the `async move` block.
+/// However, this allows the `Future` to outlive the original scope of the
+/// variable:
+fn move_block() -&gt; impl Future&lt;Output = ()&gt; {
+    let my_string = &quot;foo&quot;.to_string();
+    async move {
+        // ...
+        println!(&quot;{}&quot;, my_string);
+    }
+}
+</code></pre>
+<h2><a class="header" href="#多线程executor的await" id="多线程executor的await">多线程Executor的<code>.await</code></a></h2>
+<p>需要注意的是，当使用一个多线程<code>Future</code>executor时，一个<code>Future</code>可能会在线程间转移，因此<code>async</code>代码体重的任何变量同样有在线程间转移的可能，因为<code>.await</code>有可能导致切换至新的线程。</p>
+<p>也就是说，使用<code>Rc</code>，<code>&amp;RefCell</code>或者其他没有实现<code>Send</code>trait的类型，以及 没有实现<code>Sync</code>的类型 的引用，都是不安全的。</p>
+<p>(另：如果不是在调用<code>.await</code>时使用还是可以的。)</p>
+<p>类似地，不应该在<code>.await</code>过程中使用一个传统的，非future感知的锁(<em>non-futures-aware lock</em>)，因为其可能导致线程池的锁定：一个task除去锁，进行<code>await</code>并向executor让出，让另一个task尝试除去锁，因而造成死锁。为了避免这个现象，请使用<code>futures::lock</code>中的<code>Mutex</code>，而不是<code>std::sync</code>。</p>
+<h1><a class="header" href="#pin" id="pin">Pin</a></h1>
+<p>为了对future进行轮询，需要将其用一个特别的，名为<code>Pin&lt;T&gt;</code>的类型来固定(<em>pin</em>)。如果你读了之前<a href="04_pinning/../02_execution/01_chapter.html"><code>Future</code>的执行和Task</a>这一节中对<a href="04_pinning/../02_execution/02_future.html"><code>Future</code>trait</a>的解释，应该能想起来<code>Pin</code>曾在<code>Future::poll</code>方法定义中的<code>self: Pin&lt;&amp;mut Self&gt;</code>出现。但是这是什么意思？为什么要这么做？</p>
+<h2><a class="header" href="#为什么需要pin" id="为什么需要pin">为什么需要Pin</a></h2>
+<p><code>Pin</code>和<code>Unpin</code>标记搭配工作。Pin能够保证实现了<code>!Unpin</code>的对象不会被移动。为了帮助理解，先来回忆下<code>async</code>/<code>.await</code>是如何工作的：</p>
+<pre><code class="language-rust edition2018 ignore">let fut_one = /* ... */;
+let fut_two = /* ... */;
+async move {
+    fut_one.await;
+    fut_two.await;
+}
+</code></pre>
+<p>从底层来看，其创建了一个实现了<code>Future</code>的匿名类型，并提供了如下的<code>poll</code>方法：</p>
+<pre><code class="language-rust ignore">// The `Future` type generated by our `async { ... }` block
+struct AsyncFuture {
+    fut_one: FutOne,
+    fut_two: FutTwo,
+    state: State,
+}
+
+// List of states our `async` block can be in
+enum State {
+    AwaitingFutOne,
+    AwaitingFutTwo,
+    Done,
+}
+
+impl Future for AsyncFuture {
+    type Output = ();
+
+    fn poll(mut self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;()&gt; {
+        loop {
+            match self.state {
+                State::AwaitingFutOne =&gt; match self.fut_one.poll(..) {
+                    Poll::Ready(()) =&gt; self.state = State::AwaitingFutTwo,
+                    Poll::Pending =&gt; return Poll::Pending,
+                }
+                State::AwaitingFutTwo =&gt; match self.fut_two.poll(..) {
+                    Poll::Ready(()) =&gt; self.state = State::Done,
+                    Poll::Pending =&gt; return Poll::Pending,
+                }
+                State::Done =&gt; return Poll::Ready(()),
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>poll</code>首次被调用时，会先对<code>fut_one</code>进行轮询。若<code>fut_one</code>未能完成，则会返回<code>AsyncFuture::poll</code>。每次future调用<code>poll</code>时都会找到上次执行到的地方，此过程接连进行，直到future成功完成。</p>
+<p>但要是有一个使用了引用的<code>async</code>块，又会怎样呢？</p>
+<p>比如说：</p>
+<pre><code class="language-rust edition2018 ignore">async {
+    let mut x = [0; 128];
+    let read_into_buf_fut = read_into_buf(&amp;mut x);
+    read_into_buf_fut.await;
+    println!(&quot;{:?}&quot;, x);
+}
+</code></pre>
+<p>这个会编译成怎样的结构？</p>
+<pre><code class="language-rust ignore">struct ReadIntoBuf&lt;'a&gt; {
+    buf: &amp;'a mut [u8], // 指向下面的 `x`
+}
+
+struct AsyncFuture {
+    x: [u8; 128],
+    read_into_buf_fut: ReadIntoBuf&lt;'what_lifetime?&gt;,
+}
+</code></pre>
+<p>在此处，<code>ReadIntoBuf</code>future中保存了一个对我们定义的结构体的字段，<code>x</code>，的引用。若<code>AsyncFuture</code>的所有权发生转移，<code>x</code>(在内存中)的位置同样会转移，使得<code>read_into_buf_fut.buf</code>中保存的指针无效。</p>
+<p>将future固定(<em>pin</em>)至内存的特定位置可以解决此问题，也因此可以安全地在<code>async</code>块中创建引用了。</p>
+<h2><a class="header" href="#pin详解" id="pin详解">Pin详解</a></h2>
+<p>来用一个相对简单的例子来解释pin的作用吧。现在问题可以归结为 如何处理 Rust 中的 自引用类型(<em>self-referential type</em>) 中的引用。</p>
+<p>例子如下：</p>
+<pre><code class="language-rust ignore">use std::pin::Pin;
+
+#[derive(Debug)]
+struct Test {
+    a: String,
+    b: *const String,
+}
+
+impl Test {
+    fn new(txt: &amp;str) -&gt; Self {
+        Test {
+            a: String::from(txt),
+            b: std::ptr::null(),
+        }
+    }
+
+    fn init(&amp;mut self) {
+        let self_ref: *const String = &amp;self.a;
+        self.b = self_ref;
+    }
+
+    fn a(&amp;self) -&gt; &amp;str {
+        &amp;self.a
+    }
+
+    fn b(&amp;self) -&gt; &amp;String {
+        unsafe {&amp;*(self.b)}
+    }
+}
+</code></pre>
+<p><code>Test</code>提供了用于获取字段<code>a</code>和<code>b</code>引用的方法。<code>b</code>是<code>a</code>的一个引用，由于Rust的借用规则不允许我们定义其生命周期，只好把它作为指针存储。现在就有了一个自引用结构体(<em>self-referential struct</em>)。</p>
+<p>如果不转移数据的所有权，例子还是没什么问题的：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut test1 = Test::new(&quot;test1&quot;);
+    test1.init();
+    let mut test2 = Test::new(&quot;test2&quot;);
+    test2.init();
+
+    println!(&quot;a: {}, b: {}&quot;, test1.a(), test1.b());
+    println!(&quot;a: {}, b: {}&quot;, test2.a(), test2.b());
+
+}
+<span class="boring">use std::pin::Pin;
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Test {
+</span><span class="boring">    a: String,
+</span><span class="boring">    b: *const String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Test {
+</span><span class="boring">    fn new(txt: &amp;str) -&gt; Self {
+</span><span class="boring">        Test {
+</span><span class="boring">            a: String::from(txt),
+</span><span class="boring">            b: std::ptr::null(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    // We need an `init` method to actually set our self-reference
+</span><span class="boring">    fn init(&amp;mut self) {
+</span><span class="boring">        let self_ref: *const String = &amp;self.a;
+</span><span class="boring">        self.b = self_ref;
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn a(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        &amp;self.a
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn b(&amp;self) -&gt; &amp;String {
+</span><span class="boring">        unsafe {&amp;*(self.b)}
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>能够得到预料之中的结果：</p>
+<pre><code class="language-rust ignore">a: test1, b: test1
+a: test2, b: test2
+</code></pre>
+<p>但要是交换了<code>test1</code>和<code>test2</code>而因此使所有权发生了转移，就不大一样了：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut test1 = Test::new(&quot;test1&quot;);
+    test1.init();
+    let mut test2 = Test::new(&quot;test2&quot;);
+    test2.init();
+
+    println!(&quot;a: {}, b: {}&quot;, test1.a(), test1.b());
+    std::mem::swap(&amp;mut test1, &amp;mut test2);
+    println!(&quot;a: {}, b: {}&quot;, test2.a(), test2.b());
+
+}
+<span class="boring">use std::pin::Pin;
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Test {
+</span><span class="boring">    a: String,
+</span><span class="boring">    b: *const String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Test {
+</span><span class="boring">    fn new(txt: &amp;str) -&gt; Self {
+</span><span class="boring">        Test {
+</span><span class="boring">            a: String::from(txt),
+</span><span class="boring">            b: std::ptr::null(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn init(&amp;mut self) {
+</span><span class="boring">        let self_ref: *const String = &amp;self.a;
+</span><span class="boring">        self.b = self_ref;
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn a(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        &amp;self.a
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn b(&amp;self) -&gt; &amp;String {
+</span><span class="boring">        unsafe {&amp;*(self.b)}
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>从直觉上来说，理应得到debug两次打印了<code>test1</code>的内容：</p>
+<pre><code class="language-rust ignore">a: test1, b: test1
+a: test1, b: test1
+</code></pre>
+<p>但其实是这样的：</p>
+<pre><code class="language-rust ignore">a: test1, b: test1
+a: test1, b: test2
+</code></pre>
+<p><code>test1</code>中指向<code>test2.b</code>的指针还指向原来(<code>test2.b</code>)的位置。结构体不再是自引用的，而是保存了一个指向不同对象的字段的指针。也就是说，<code>test2.b</code>和<code>test2</code>的生命周期也不再绑定在一起了。</p>
+<p>还是不信的话，这个肯定能说服你了：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut test1 = Test::new(&quot;test1&quot;);
+    test1.init();
+    let mut test2 = Test::new(&quot;test2&quot;);
+    test2.init();
+
+    println!(&quot;a: {}, b: {}&quot;, test1.a(), test1.b());
+    std::mem::swap(&amp;mut test1, &amp;mut test2);
+    test1.a = &quot;I've totally changed now!&quot;.to_string();
+    println!(&quot;a: {}, b: {}&quot;, test2.a(), test2.b());
+
+}
+<span class="boring">use std::pin::Pin;
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Test {
+</span><span class="boring">    a: String,
+</span><span class="boring">    b: *const String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Test {
+</span><span class="boring">    fn new(txt: &amp;str) -&gt; Self {
+</span><span class="boring">        Test {
+</span><span class="boring">            a: String::from(txt),
+</span><span class="boring">            b: std::ptr::null(),
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn init(&amp;mut self) {
+</span><span class="boring">        let self_ref: *const String = &amp;self.a;
+</span><span class="boring">        self.b = self_ref;
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn a(&amp;self) -&gt; &amp;str {
+</span><span class="boring">        &amp;self.a
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn b(&amp;self) -&gt; &amp;String {
+</span><span class="boring">        unsafe {&amp;*(self.b)}
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>下图能够将此过程可视化：</p>
+<p><strong>Fig 1: Before and after swap</strong>
+<img src="04_pinning/../assets/swap_problem.jpg" alt="swap_problem" /></p>
+<p>这张图同样地，更明显地展现了此过程中的种种未定义行为或问题。</p>
+<h2><a class="header" href="#pin实践" id="pin实践">Pin实践</a></h2>
+<p>现在来看看pin和<code>Pin</code>类型是怎么解决问题的。</p>
+<p><code>Pin</code>类型能够对指针类型进行包装，保证其指向的值不会移动。比如，<code>Pin&lt;&amp;mut T&gt;</code>，<code>Pin&lt;&amp;T&gt;</code>，<code>Pin&lt;Box&lt;T&gt;&gt;</code>对于满足<code>T: !Unpin</code>条件的<code>T</code>，均能保证<code>T</code>不被移动。</p>
+<p>大部分类型的移动都不存在问题，因为它们实现了名为<code>Unpin</code>的trait。指向<code>Unpin</code>类型的指针 能够自由置于<code>Pin</code>中 或 从<code>Pin</code>中取出。比如说，<code>u8</code>是<code>Unpin</code>类型的，因此<code>Pin&lt;&amp;mut u8&gt;</code>与普通的<code>&amp;mut u8</code>使用方式并无二致。</p>
+<p>但是，如果类型经<code>!Unpin</code>标记，就不再能进行移动了。<code>async</code>/<code>await</code>创建的future就是例子之一。</p>
+<h3><a class="header" href="#固定pin到栈上" id="固定pin到栈上">固定(<em>pin</em>)到栈上</a></h3>
+<p>再次回到例子中，现在可以用<code>Pin</code>来解决问题了。我们的例子在使用了一个经固定的指针后是这样的：</p>
+<pre><code class="language-rust ignore">use std::pin::Pin;
+use std::marker::PhantomPinned;
+
+#[derive(Debug)]
+struct Test {
+    a: String,
+    b: *const String,
+    _marker: PhantomPinned,
+}
+
+
+impl Test {
+    fn new(txt: &amp;str) -&gt; Self {
+        Test {
+            a: String::from(txt),
+            b: std::ptr::null(),
+            _marker: PhantomPinned, // This makes our type `!Unpin`
+        }
+    }
+    fn init&lt;'a&gt;(self: Pin&lt;&amp;'a mut Self&gt;) {
+        let self_ptr: *const String = &amp;self.a;
+        let this = unsafe { self.get_unchecked_mut() };
+        this.b = self_ptr;
+    }
+
+    fn a&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a str {
+        &amp;self.get_ref().a
+    }
+
+    fn b&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a String {
+        unsafe { &amp;*(self.b) }
+    }
+}
+</code></pre>
+<p>若对象实现了<code>!Unpin</code>，则将其固定至栈的行为总是<code>unsafe</code>的，可以用<a href="https://docs.rs/pin-utils/"><code>pin_utils</code></a> 来避免编写<code>unsafe</code>代码。</p>
+<p>在下面的代码中，我们将<code>test1</code>和<code>test2</code>两个对象固定至栈：</p>
+<pre><pre class="playground"><code class="language-rust">pub fn main() {
+    // 在 `test1` 初始化前对其进行移动是安全的 
+    let mut test1 = Test::new(&quot;test1&quot;);
+    // 通过覆盖 `test1` 使其不再可达
+    let mut test1 = unsafe { Pin::new_unchecked(&amp;mut test1) };
+    Test::init(test1.as_mut());
+
+    let mut test2 = Test::new(&quot;test2&quot;);
+    let mut test2 = unsafe { Pin::new_unchecked(&amp;mut test2) };
+    Test::init(test2.as_mut());
+
+    println!(&quot;a: {}, b: {}&quot;, Test::a(test1.as_ref()), Test::b(test1.as_ref()));
+    println!(&quot;a: {}, b: {}&quot;, Test::a(test2.as_ref()), Test::b(test2.as_ref()));
+}
+<span class="boring">use std::pin::Pin;
+</span><span class="boring">use std::marker::PhantomPinned;
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Test {
+</span><span class="boring">    a: String,
+</span><span class="boring">    b: *const String,
+</span><span class="boring">    _marker: PhantomPinned,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">
+</span><span class="boring">impl Test {
+</span><span class="boring">    fn new(txt: &amp;str) -&gt; Self {
+</span><span class="boring">        Test {
+</span><span class="boring">            a: String::from(txt),
+</span><span class="boring">            b: std::ptr::null(),
+</span><span class="boring">            // This makes our type `!Unpin`
+</span><span class="boring">            _marker: PhantomPinned,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">    fn init&lt;'a&gt;(self: Pin&lt;&amp;'a mut Self&gt;) {
+</span><span class="boring">        let self_ptr: *const String = &amp;self.a;
+</span><span class="boring">        let this = unsafe { self.get_unchecked_mut() };
+</span><span class="boring">        this.b = self_ptr;
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn a&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a str {
+</span><span class="boring">        &amp;self.get_ref().a
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn b&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a String {
+</span><span class="boring">        unsafe { &amp;*(self.b) }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>现在如果再试图移动数据，就会得到一个编译错误：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">pub fn main() {
+    let mut test1 = Test::new(&quot;test1&quot;);
+    let mut test1 = unsafe { Pin::new_unchecked(&amp;mut test1) };
+    Test::init(test1.as_mut());
+
+    let mut test2 = Test::new(&quot;test2&quot;);
+    let mut test2 = unsafe { Pin::new_unchecked(&amp;mut test2) };
+    Test::init(test2.as_mut());
+
+    println!(&quot;a: {}, b: {}&quot;, Test::a(test1.as_ref()), Test::b(test1.as_ref()));
+    std::mem::swap(test1.get_mut(), test2.get_mut());
+    println!(&quot;a: {}, b: {}&quot;, Test::a(test2.as_ref()), Test::b(test2.as_ref()));
+}
+<span class="boring">use std::pin::Pin;
+</span><span class="boring">use std::marker::PhantomPinned;
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Test {
+</span><span class="boring">    a: String,
+</span><span class="boring">    b: *const String,
+</span><span class="boring">    _marker: PhantomPinned,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">
+</span><span class="boring">impl Test {
+</span><span class="boring">    fn new(txt: &amp;str) -&gt; Self {
+</span><span class="boring">        Test {
+</span><span class="boring">            a: String::from(txt),
+</span><span class="boring">            b: std::ptr::null(),
+</span><span class="boring">            _marker: PhantomPinned, // This makes our type `!Unpin`
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">    fn init&lt;'a&gt;(self: Pin&lt;&amp;'a mut Self&gt;) {
+</span><span class="boring">        let self_ptr: *const String = &amp;self.a;
+</span><span class="boring">        let this = unsafe { self.get_unchecked_mut() };
+</span><span class="boring">        this.b = self_ptr;
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn a&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a str {
+</span><span class="boring">        &amp;self.get_ref().a
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn b&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a String {
+</span><span class="boring">        unsafe { &amp;*(self.b) }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>类型系统会阻止我们移动此数据。</p>
+<blockquote>
+<p>需要注意的是，栈固定(<em>stack pinning</em>)依赖于我们编写<code>unsafe</code>代码时做出的保证。尽管我们知道<code>&amp;'a mut T</code>指向的目标被以生命周期<code>'a</code>进行固定，却不能确定<code>&amp;'a mut T</code>的数据在<code>'a</code>结束后是否被移动。如果被移动了，就违背了<code>Pin</code>的约定。</p>
+<p>有一个很容易犯的错误，就是忘记覆盖原变量，而因此可以在释放<code>Pin</code>后移动<code>a mut T</code>的数据，就像下面这样(违背了<code>Pin</code>约定)：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+	let mut test1 = Test::new(&quot;test1&quot;);
+	let mut test1_pin = unsafe { Pin::new_unchecked(&amp;mut test1) };
+    
+	Test::init(test1_pin.as_mut());
+	drop(test1_pin);
+	println!(r#&quot;test1.b points to &quot;test1&quot;: {:?}...&quot;#, test1.b);
+    
+	let mut test2 = Test::new(&quot;test2&quot;);
+	mem::swap(&amp;mut test1, &amp;mut test2);
+	println!(&quot;... and now it points nowhere: {:?}&quot;, test1.b);
+}
+<span class="boring">use std::pin::Pin;
+</span><span class="boring">use std::marker::PhantomPinned;
+</span><span class="boring">use std::mem;
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Test {
+</span><span class="boring">    a: String,
+</span><span class="boring">    b: *const String,
+</span><span class="boring">    _marker: PhantomPinned,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">
+</span><span class="boring">impl Test {
+</span><span class="boring">    fn new(txt: &amp;str) -&gt; Self {
+</span><span class="boring">        Test {
+</span><span class="boring">            a: String::from(txt),
+</span><span class="boring">            b: std::ptr::null(),
+</span><span class="boring">            // This makes our type `!Unpin`
+</span><span class="boring">            _marker: PhantomPinned,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">    fn init&lt;'a&gt;(self: Pin&lt;&amp;'a mut Self&gt;) {
+</span><span class="boring">        let self_ptr: *const String = &amp;self.a;
+</span><span class="boring">        let this = unsafe { self.get_unchecked_mut() };
+</span><span class="boring">        this.b = self_ptr;
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn a&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a str {
+</span><span class="boring">        &amp;self.get_ref().a
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn b&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a String {
+</span><span class="boring">        unsafe { &amp;*(self.b) }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre></pre>
+</blockquote>
+<h3><a class="header" href="#固定pin到堆上" id="固定pin到堆上">固定(<em>pin</em>)到堆上</a></h3>
+<p>将一个<code>!Unpin</code>类型固定至堆上会为该数据赋予一个稳定的地址，也就是说，一旦数据被固定就不再能移动了。与固定到栈相比，固定到堆会使目标在整个生命周期中都被固定住。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::pin::Pin;
+use std::marker::PhantomPinned;
+
+#[derive(Debug)]
+struct Test {
+    a: String,
+    b: *const String,
+    _marker: PhantomPinned,
+}
+
+impl Test {
+    fn new(txt: &amp;str) -&gt; Pin&lt;Box&lt;Self&gt;&gt; {
+        let t = Test {
+            a: String::from(txt),
+            b: std::ptr::null(),
+            _marker: PhantomPinned,
+        };
+        let mut boxed = Box::pin(t);
+        let self_ptr: *const String = &amp;boxed.as_ref().a;
+        unsafe { boxed.as_mut().get_unchecked_mut().b = self_ptr };
+
+        boxed
+    }
+
+    fn a&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a str {
+        &amp;self.get_ref().a
+    }
+
+    fn b&lt;'a&gt;(self: Pin&lt;&amp;'a Self&gt;) -&gt; &amp;'a String {
+        unsafe { &amp;*(self.b) }
+    }
+}
+
+pub fn main() {
+    let mut test1 = Test::new(&quot;test1&quot;);
+    let mut test2 = Test::new(&quot;test2&quot;);
+
+    println!(&quot;a: {}, b: {}&quot;,test1.as_ref().a(), test1.as_ref().b());
+    println!(&quot;a: {}, b: {}&quot;,test2.as_ref().a(), test2.as_ref().b());
+}
+</code></pre></pre>
+<p>一些函数需要其future为<code>Unpin</code>。为了在这些函数中使用<code>Future</code>或<code>Stream</code>这种非<code>Unpin</code>的类型，就必须先使用<code>Box::pin</code>(能创建一个<code>Pin&lt;Box&lt;T&gt;&gt;</code>)或<code>pin_utils::pin_mut!</code>宏(能创建一个<code>Pin&lt;&amp;mut T&gt;</code>)来固定值。<code>Pin&lt;Box&lt;Fut&gt;&gt;</code>和<code>Pin&lt;&amp;mut Fut&gt;</code>都能作为future使用，且都实现了<code>Unpin</code>。</p>
+<p>举个例子：</p>
+<pre><code class="language-rust edition2018 ignore">use pin_utils::pin_mut; // `pin_utils` crate可从crates.io获得
+
+// 一个接受 `Future` 参数并实现了 Unpin 的函数
+fn execute_unpin_future(x: impl Future&lt;Output = ()&gt; + Unpin) { /* ... */ }
+
+let fut = async { /* ... */ };
+execute_unpin_future(fut); // Error: `fut` does not implement `Unpin` trait
+
+// 通过 `Box` 固定:
+let fut = async { /* ... */ };
+let fut = Box::pin(fut);
+execute_unpin_future(fut); // OK
+
+// 通过 `pin_mut!` 固定:
+let fut = async { /* ... */ };
+pin_mut!(fut);
+execute_unpin_future(fut); // OK
+</code></pre>
+<h2><a class="header" href="#总结" id="总结">总结</a></h2>
+<ol>
+<li>如果有<code>T: Unpin</code>(默认情况下就是这样)，那么<code>Pin&lt;'a, T&gt;</code>与<code>&amp;'a mut T&gt;</code>完全等价。换句话说：<code>Unpin</code>意味着在值被固定(<em>pin</em>)时可被移动，因而<code>Pin</code>不会对此类型有任何影响。</li>
+<li>如果有<code>T: !Unpin</code>，那么获取<code>&amp;mut T</code>必须在unsafe块中进行。</li>
+<li>标准库中大多数类型都实现了<code>Unpin</code>，而对于Rust中可能遇到的大多数类型同样如此。由<code>async</code>/<code>.await</code>生成的<code>Future</code>是个例外。</li>
+<li>可在Rust的nightly版本中通过feature flag为某个类型添加<code>!Unpin</code> bound，或者在stable版本中为类型添加<code>std::marker::PhantomPinned</code></li>
+<li>可将数据固定至堆或栈</li>
+<li>将<code>!Unpin</code>对象固定至栈需要在<code>unsafe</code>块中进行</li>
+<li>将<code>!Unpin</code>对象固定至堆不需要<code>unsafe</code>，可使用<code>Box::pin</code>来进行。</li>
+<li>对于被固定的<code>T: !Unpin</code>类型的数据，必须要维持其不可变性，即维持其内存内容不会被无效化或被修改，<em>从被固定时开始，直到被释放(drop)时</em>。这是<code>Pin</code>约定的重点。</li>
+</ol>
+<h1><a class="header" href="#stream-trait" id="stream-trait"><code>Stream</code> Trait</a></h1>
+<p><code>Stream</code>trait和<code>Future</code>很相像，但<code>Stream</code>可以在其完成前返回多个值，与标准库中的<code>Iterator</code>trait类似：</p>
+<pre><code class="language-rust ignore">trait Stream {
+    /// The type of the value yielded by the stream.
+    type Item;
+
+    /// Attempt to resolve the next item in the stream.
+    /// Returns `Poll::Pending` if not ready, `Poll::Ready(Some(x))` if a value
+    /// is ready, and `Poll::Ready(None)` if the stream has completed.
+    fn poll_next(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;)
+        -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
+}
+</code></pre>
+<p>一个常见的<code>Stream</code>例子就是<code>futures</code>crate中的管道类型<code>Receiver</code>。每次<code>Sender</code>段有值发送时都会产生一个<code>Some(val)</code>，当<code>Sender</code>释放，且所有信息已接收完成时则产生<code>None</code>：</p>
+<pre><code class="language-rust edition2018 ignore">async fn send_recv() {
+    const BUFFER_SIZE: usize = 10;
+    let (mut tx, mut rx) = mpsc::channel::&lt;i32&gt;(BUFFER_SIZE);
+
+    tx.send(1).await.unwrap();
+    tx.send(2).await.unwrap();
+    drop(tx);
+
+    // `StreamExt::next` is similar to `Iterator::next`, but returns a
+    // type that implements `Future&lt;Output = Option&lt;T&gt;&gt;`.
+    assert_eq!(Some(1), rx.next().await);
+    assert_eq!(Some(2), rx.next().await);
+    assert_eq!(None, rx.next().await);
+}
+</code></pre>
+<h1><a class="header" href="#迭代与并发" id="迭代与并发">迭代与并发</a></h1>
+<p>与同步<code>Iterator</code>相似，有不少不同的迭代处理<code>Stream</code>中值的方法。有像<code>map</code>，<code>filter</code>和<code>fold</code>这种组合子风格(<em>combinator-style</em>)的方法，还有它们提供了出错时提早退出的(<em>early-exit-on-error</em>)的近亲<code>try_map</code>，<code>try_filter</code>和<code>try_fold</code>。</p>
+<p>不幸的是，不能对<code>Stream</code>使用<code>for</code>循环，但是对于命令式风格(<em>imperative-style</em>)的代码，是可以使用<code>while let</code>和<code>next</code>/<code>try_next</code>这样的函数的：</p>
+<pre><code class="language-rust edition2018 ignore">async fn sum_with_next(mut stream: Pin&lt;&amp;mut dyn Stream&lt;Item = i32&gt;&gt;) -&gt; i32 {
+    use futures::stream::StreamExt; // for `next`
+    let mut sum = 0;
+    while let Some(item) = stream.next().await {
+        sum += item;
+    }
+    sum
+}
+
+async fn sum_with_try_next(
+    mut stream: Pin&lt;&amp;mut dyn Stream&lt;Item = Result&lt;i32, io::Error&gt;&gt;&gt;,
+) -&gt; Result&lt;i32, io::Error&gt; {
+    use futures::stream::TryStreamExt; // for `try_next`
+    let mut sum = 0;
+    while let Some(item) = stream.try_next().await? {
+        sum += item;
+    }
+    Ok(sum)
+}
+</code></pre>
+<p>但要是一次只处理一个元素，就失去了并发的机会，毕竟编写异步代码是第一位的。为了并发处理Stream中的多个内容，请使用<code>for_each_concurrent</code>和<code>try_for_each_concurrent</code>：</p>
+<pre><code class="language-rust edition2018 ignore">async fn jump_around(
+    mut stream: Pin&lt;&amp;mut dyn Stream&lt;Item = Result&lt;u8, io::Error&gt;&gt;&gt;,
+) -&gt; Result&lt;(), io::Error&gt; {
+    use futures::stream::TryStreamExt; // for `try_for_each_concurrent`
+    const MAX_CONCURRENT_JUMPERS: usize = 100;
+
+    stream.try_for_each_concurrent(MAX_CONCURRENT_JUMPERS, |num| async move {
+        jump_n_times(num).await?;
+        report_n_jumps(num).await?;
+        Ok(())
+    }).await?;
+
+    Ok(())
+}
+</code></pre>
+<h1><a class="header" href="#单次执行多个future" id="单次执行多个future">单次执行多个Future</a></h1>
+<p>到目前为止，我们几乎都是用<code>.await</code>来执行Future的，其会阻塞当前的task，直到某个特定<code>Future</code>完成。但是，在实际的异步应用中常常需要并发执行多个不同的行动。</p>
+<p>在这一章中，会涉及一些单次执行多个异步行动的方法：</p>
+<ul>
+<li><code>join!</code>：等待future全部完成</li>
+<li><code>select!</code>：等待几个future中的某个完成</li>
+<li>Spawning: creates a top-level task which ambiently runs a future to completion</li>
+<li><code>FuturesUnordered</code>：一组能够返回子future结果的future</li>
+</ul>
+<h1><a class="header" href="#join" id="join"><code>join!</code></a></h1>
+<p><code>futures::join</code>宏可以在 并发执行多个future的同时 等待它们完成。</p>
+<h1><a class="header" href="#join-1" id="join-1"><code>join!</code></a></h1>
+<p>当进行多个异步行动时，很容易就只是简单地、连续对它们使用<code>.await</code>：</p>
+<pre><code class="language-rust edition2018 ignore">async fn get_book_and_music() -&gt; (Book, Music) {
+    let book = get_book().await;
+    let music = get_music().await;
+    (book, music)
+}
+</code></pre>
+<p>但是这样会比理论上要慢，因为<code>get_book</code>执行完后才会开始尝试执行<code>get_music</code>。在一些编程语言里，future会环境运行至完成(<em>ambiently run to completion</em>?译注：指有些语言会在调用异步函数时就开始执行future，而非像Rust一样到被<code>await</code>时才执行)，因此这两个行动会在<code>async fn</code>调用时就开始运行future，之后只要await它们就好了：</p>
+<pre><code class="language-rust edition2018 ignore">// WRONG -- don't do this
+async fn get_book_and_music() -&gt; (Book, Music) {
+    let book_future = get_book();
+    let music_future = get_music();
+    (book_future.await, music_future.await)
+}
+</code></pre>
+<p>但是，Rust中的Future在被<code>.await</code>时才开始工作。也就是说上面的两个代码片段都会顺序执行<code>book_future</code>和<code>music_future</code>，而非并发运行。为了使这两个future能正确地并发运行，要使用<code>futures::join!</code>：</p>
+<pre><code class="language-rust edition2018 ignore">use futures::join;
+
+async fn get_book_and_music() -&gt; (Book, Music) {
+    let book_fut = get_book();
+    let music_fut = get_music();
+    join!(book_fut, music_fut)
+}
+</code></pre>
+<p><code>join!</code>的返回值是一个包含了 每个传入的<code>Future</code>的执行结果 的元组。</p>
+<h2><a class="header" href="#try_join" id="try_join"><code>try_join!</code></a></h2>
+<p>对于返回<code>Result</code>的future，可以考虑用<code>try_join!</code>取代<code>join!</code>。由于<code>join!</code>只在所有子future完成时才算完成，因此即便某个子future返回了<code>Err</code>，仍然会继续处理其他future。</p>
+<p>与<code>join!</code>不同的是，<code>try_join!</code>会在任一子future返回<code>Err</code>时立即完成</p>
+<pre><code class="language-rust edition2018 ignore">use futures::try_join;
+
+async fn get_book() -&gt; Result&lt;Book, String&gt; { /* ... */ Ok(Book) }
+async fn get_music() -&gt; Result&lt;Music, String&gt; { /* ... */ Ok(Music) }
+
+async fn get_book_and_music() -&gt; Result&lt;(Book, Music), String&gt; {
+    let book_fut = get_book();
+    let music_fut = get_music();
+    try_join!(book_fut, music_fut)
+}
+</code></pre>
+<p>需要注意的是，传递给<code>try_join!</code>的future参数返回的错误类型必须相同。请考虑使用<code>futures::future::TryFutureExt</code>中的<code>.map_err(|e| ...)</code>和<code>.err_into()</code>来合并错误类型：</p>
+<pre><code class="language-rust edition2018 ignore">use futures::{
+    future::TryFutureExt,
+    try_join,
+};
+
+async fn get_book() -&gt; Result&lt;Book, ()&gt; { /* ... */ Ok(Book) }
+async fn get_music() -&gt; Result&lt;Music, String&gt; { /* ... */ Ok(Music) }
+
+async fn get_book_and_music() -&gt; Result&lt;(Book, Music), String&gt; {
+    let book_fut = get_book().map_err(|()| &quot;Unable to get book&quot;.to_string());
+    let music_fut = get_music();
+    try_join!(book_fut, music_fut)
+}
+</code></pre>
+<h1><a class="header" href="#select" id="select"><code>select!</code></a></h1>
+<p><code>futures::select</code>宏让用户可同时运行多个future，并在在任意future完成时做出响应。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::{
+    future::FutureExt, // for `.fuse()`
+    pin_mut,
+    select,
+};
+
+async fn task_one() { /* ... */ }
+async fn task_two() { /* ... */ }
+
+async fn race_tasks() {
+    let t1 = task_one().fuse();
+    let t2 = task_two().fuse();
+
+    pin_mut!(t1, t2);
+
+    select! {
+        () = t1 =&gt; println!(&quot;task one completed first&quot;),
+        () = t2 =&gt; println!(&quot;task two completed first&quot;),
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>上面的函数会并发运行<code>t1</code>和<code>t2</code>。只要其中一个完成了，对应的处理程序(<em>corresponding handler</em>)就会调用<code>println!</code>，并在不执行剩余task的情况下直接结束。</p>
+<p><code>select</code>的基本语法是<code>&lt;pattern&gt; = &lt;expression&gt; =&gt; &lt;code&gt;,</code>，对每一个要<code>select</code>的future重复即可。</p>
+<h2><a class="header" href="#default---和-complete--" id="default---和-complete--"><code>default =&gt; ...</code> 和 <code>complete =&gt; ...</code></a></h2>
+<p><code>select</code>同样支持<code>default</code>和<code>complete</code>分支。</p>
+<p><code>default</code>分支会在每个被<code>select</code>的future都还没完成时执行。拥有<code>default</code>分支的<code>select</code>会因此总是立即返回，因为<code>default</code>会在任一future都未就绪时执行。</p>
+<p><code>complete</code>分支可用来处理所有被<code>select</code>的future均完成且不需再运行的情况，经常是在<code>select!</code>中循环时被用到。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::{future, select};
+
+async fn count() {
+    let mut a_fut = future::ready(4);
+    let mut b_fut = future::ready(6);
+    let mut total = 0;
+
+    loop {
+        select! {
+            a = a_fut =&gt; total += a,
+            b = b_fut =&gt; total += b,
+            complete =&gt; break,
+            default =&gt; unreachable!(), // never runs (futures are ready, then complete)
+        };
+    }
+    assert_eq!(total, 10);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#与unpin-和-fusedfuture的交互使用" id="与unpin-和-fusedfuture的交互使用">与<code>Unpin</code> 和 <code>FusedFuture</code>的交互使用</a></h2>
+<p>在上面的第一个例子中你可能注意到，我们不得不对这两个<code>async fn</code>返回的future调用<code>.fuse()</code>，并使用<code>pin_mut</code>将其固定(<em>pin</em>)。之所以要这么做，是因为在<code>select</code>中使用的future必须实现<code>Unpin</code>和<code>FusedFuture</code>两个trait。</p>
+<p>由于<code>select</code>接受的future参数并非是其值，而是其可变引用，因此需要<code>Unpin</code>。而也正是因为没有获取future的所有权，在调用<code>select</code>后未完成的future仍可以被重用。</p>
+<p>类似地，若要让<code>select</code>不在某个future已完成后，再对其进行轮询，该future就需要<code>FusedFuture</code>trait。通过实现<code>FusedFuture</code>，可以追踪future是否完成，因而可以在循环中使用<code>loop</code>，且只要对尚未完成的future进行轮询就够了。通过上面的例子就能看出，<code>a_fut</code>或<code>b_fut</code>在第二次循环时应已完成。由于<code>future::ready</code>返回的future实现了<code>FusedFuture</code>，就能够告知<code>select</code>不要再次对其进行轮询。</p>
+<p>需要注意的是，<code>Stream</code>也具有相应的<code>FusedStream</code>trait。实现了<code>FusedStream</code>或经<code>.fuse()</code>封装的Stream会通过<code>.next()</code>/<code>.try_next()</code>组合子产生具有<code>FusedFuture</code>trait的future。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::{
+    stream::{Stream, StreamExt, FusedStream},
+    select,
+};
+
+async fn add_two_streams(
+    mut s1: impl Stream&lt;Item = u8&gt; + FusedStream + Unpin,
+    mut s2: impl Stream&lt;Item = u8&gt; + FusedStream + Unpin,
+) -&gt; u8 {
+    let mut total = 0;
+
+    loop {
+        let item = select! {
+            x = s1.next() =&gt; x,
+            x = s2.next() =&gt; x,
+            complete =&gt; break,
+        };
+        if let Some(next_num) = item {
+            total += next_num;
+        }
+    }
+
+    total
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#使用fuse和futuresunordered在select循环中运行并发task" id="使用fuse和futuresunordered在select循环中运行并发task">使用<code>Fuse</code>和<code>FuturesUnordered</code>在<code>select</code>循环中运行并发Task</a></h2>
+<p>有个存在感稍弱但是很好用的函数是<code>Fuse::terminated()</code>，通过它可以构造一个已经终止(<em>terminated</em>)的空future，且之后可在其中填充我们要运行的内容。如果一个task要在<code>select</code>循环中运行，而且在这个循环中才被创建，这个函数就有用了。</p>
+<p>还有一个就是<code>.select_next_some()</code>函数。它可以与<code>select</code>共同使用，当Stream中返回的值为<code>Some(_)</code>时才运行该分支，而忽略<code>None</code>值。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::{
+    future::{Fuse, FusedFuture, FutureExt},
+    stream::{FusedStream, Stream, StreamExt},
+    pin_mut,
+    select,
+};
+
+async fn get_new_num() -&gt; u8 { /* ... */ 5 }
+
+async fn run_on_new_num(_: u8) { /* ... */ }
+
+async fn run_loop(
+    mut interval_timer: impl Stream&lt;Item = ()&gt; + FusedStream + Unpin,
+    starting_num: u8,
+) {
+    let run_on_new_num_fut = run_on_new_num(starting_num).fuse();
+    let get_new_num_fut = Fuse::terminated();
+    pin_mut!(run_on_new_num_fut, get_new_num_fut);
+    loop {
+        select! {
+            () = interval_timer.select_next_some() =&gt; {
+                // The timer has elapsed. Start a new `get_new_num_fut`
+                // if one was not already running.
+                if get_new_num_fut.is_terminated() {
+                    get_new_num_fut.set(get_new_num().fuse());
+                }
+            },
+            new_num = get_new_num_fut =&gt; {
+                // A new number has arrived-- start a new `run_on_new_num_fut`,
+                // dropping the old one.
+                run_on_new_num_fut.set(run_on_new_num(new_num).fuse());
+            },
+            // Run the `run_on_new_num_fut`
+            () = run_on_new_num_fut =&gt; {},
+            // panic if everything completed, since the `interval_timer` should
+            // keep yielding values indefinitely.
+            complete =&gt; panic!(&quot;`interval_timer` completed unexpectedly&quot;),
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>若同一future的多个拷贝需要同时运行，请使用<code>FuturesUnordered</code>类型。下面的例子和上面的差不多，但是会将<code>run_on_new_num_fut</code>的每个拷贝都运行至完成，而非在一份新的拷贝创建时就放弃执行。它会输出<code>run_on_new_num_fut</code>的返回的一个值。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::{
+    future::{Fuse, FusedFuture, FutureExt},
+    stream::{FusedStream, FuturesUnordered, Stream, StreamExt},
+    pin_mut,
+    select,
+};
+
+async fn get_new_num() -&gt; u8 { /* ... */ 5 }
+
+async fn run_on_new_num(_: u8) -&gt; u8 { /* ... */ 5 }
+
+// Runs `run_on_new_num` with the latest number
+// retrieved from `get_new_num`.
+//
+// `get_new_num` is re-run every time a timer elapses,
+// immediately cancelling the currently running
+// `run_on_new_num` and replacing it with the newly
+// returned value.
+async fn run_loop(
+    mut interval_timer: impl Stream&lt;Item = ()&gt; + FusedStream + Unpin,
+    starting_num: u8,
+) {
+    let mut run_on_new_num_futs = FuturesUnordered::new();
+    run_on_new_num_futs.push(run_on_new_num(starting_num));
+    let get_new_num_fut = Fuse::terminated();
+    pin_mut!(get_new_num_fut);
+    loop {
+        select! {
+            () = interval_timer.select_next_some() =&gt; {
+                // The timer has elapsed. Start a new `get_new_num_fut`
+                // if one was not already running.
+                if get_new_num_fut.is_terminated() {
+                    get_new_num_fut.set(get_new_num().fuse());
+                }
+            },
+            new_num = get_new_num_fut =&gt; {
+                // A new number has arrived-- start a new `run_on_new_num_fut`.
+                run_on_new_num_futs.push(run_on_new_num(new_num));
+            },
+            // Run the `run_on_new_num_futs` and check if any have completed
+            res = run_on_new_num_futs.select_next_some() =&gt; {
+                println!(&quot;run_on_new_num_fut returned {:?}&quot;, res);
+            },
+            // panic if everything completed, since the `interval_timer` should
+            // keep yielding values indefinitely.
+            complete =&gt; panic!(&quot;`interval_timer` completed unexpectedly&quot;),
+        }
+    }
+}
+
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#workarounds-to-know-and-love" id="workarounds-to-know-and-love">Workarounds to Know and Love</a></h1>
+<p>Rust的<code>async</code>支持尚处于起步阶段，一部分热门特性还在积极开发测试中。本章会讨论一些常见痛点并解释如何绕过它们。</p>
+<h1><a class="header" href="#返回类型出错" id="返回类型出错">返回类型出错</a></h1>
+<p>在一个常见的Rust函数中，返回一个错误的类型会导致如下错误：</p>
+<pre><code>error[E0308]: mismatched types
+ --&gt; src/main.rs:2:12
+  |
+1 | fn foo() {
+  |           - expected `()` because of default return type
+2 |     return &quot;foo&quot;
+  |            ^^^^^ expected (), found reference
+  |
+  = note: expected type `()`
+             found type `&amp;'static str`
+</code></pre>
+<p>但是当前的<code>async fn</code>是不知道如何“信任”函数签名中的返回类型的，因而可能引起类型不匹配，甚至是(<em>reversed-sounding</em>)错误。比如说，函数<code>async fn foo() { &quot;foo&quot; }</code>就会导致这个错误：</p>
+<pre><code>error[E0271]: type mismatch resolving `&lt;impl std::future::Future as std::future::Future&gt;::Output == ()`
+ --&gt; src/lib.rs:1:16
+  |
+1 | async fn foo() {
+  |                ^ expected &amp;str, found ()
+  |
+  = note: expected type `&amp;str`
+             found type `()`
+  = note: the return type of a function must have a statically known size
+</code></pre>
+<p>错误信息说该函数应返回一个<code>&amp;str</code>值，但只找到了一个<code>()</code>，跟我们想象中的情况正好相反。这是因为编译器错误地相信了“函数体会返回正确类型”这件事。</p>
+<p>一个应对方法就是记住，当错误信息通过&quot;expected <code>SomeType</code>, found <code>OtherType</code>&quot;的信息指出了 函数签名 的问题时，通常表明实际上是 返回的位置 出了问题。</p>
+<p>正在通过<a href="https://github.com/rust-lang/rust/issues/54326">这个bug报告页</a>来追踪此问题的修复情况。</p>
+<h1><a class="header" href="#async-块中的" id="async-块中的"><code>async</code> 块中的<code>?</code></a></h1>
+<p>就跟在<code>async fn</code>中一样，在<code>async</code>块中使用<code>?</code>的场景也很常见。但是，<code>async</code>块的返回类型并未显式声明出，因而可能导致编译器不能推断出<code>async</code>块的错误类型。</p>
+<p>比如说这段代码：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct MyError;
+</span><span class="boring">async fn foo() -&gt; Result&lt;(), MyError&gt; { Ok(()) }
+</span><span class="boring">async fn bar() -&gt; Result&lt;(), MyError&gt; { Ok(()) }
+</span>let fut = async {
+    foo().await?;
+    bar().await?;
+    Ok(())
+};
+<span class="boring">}
+</span></code></pre></pre>
+<p>会导致这个错误：</p>
+<pre><code>error[E0282]: type annotations needed
+ --&gt; src/main.rs:5:9
+  |
+4 |     let fut = async {
+  |         --- consider giving `fut` a type
+5 |         foo().await?;
+  |         ^^^^^^^^^^^^ cannot infer type
+</code></pre>
+<p>不幸的是，目前还没有“为<code>fut</code>注明类型”，或者是显式声明<code>async</code>块返回值的方法。应对方法是使用“涡轮鱼(<em>turbofish</em>，指Rust中用来绑定泛型参数的操作符<code>::&lt;&gt;</code>)”操作符来为<code>async</code>块提供成功和失败时的返回类型。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct MyError;
+</span><span class="boring">async fn foo() -&gt; Result&lt;(), MyError&gt; { Ok(()) }
+</span><span class="boring">async fn bar() -&gt; Result&lt;(), MyError&gt; { Ok(()) }
+</span>let fut = async {
+    foo().await?;
+    bar().await?;
+    Ok::&lt;(), MyError&gt;(()) // &lt;- note the explicit type annotation here
+};
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#send-估计" id="send-估计"><code>Send</code> 估计</a></h1>
+<p>有的<code>async fn</code>状态机在线程间传递时是安全的，有的不是。一个<code>async fn</code>的<code>future</code>是否具有<code>Send</code>trait是根据 是否有 跨越带<code>.await</code>的语句的 非<code>Send</code>类型来判断的。编译器会尽可能估计这些值可能跨越<code>.await</code>的时点，但是在今天看来，这种分析显得太过保守了。
+举个例子，考虑一个简单的非<code>Send</code>类型，比如包含了一个<code>Rc</code>的类型：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::rc::Rc;
+
+#[derive(Default)]
+struct NotSend(Rc&lt;()&gt;);
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>NotSend</code>类型的变量在<code>async fn</code>中可以作为临时变量短时间出现，即便<code>async fn</code>返回的最终的<code>Future</code>类型必须是<code>Send</code>：</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use std::rc::Rc;
+</span><span class="boring">#[derive(Default)]
+</span><span class="boring">struct NotSend(Rc&lt;()&gt;);
+</span>async fn bar() {}
+async fn foo() {
+    NotSend::default();
+    bar().await;
+}
+
+fn require_send(_: impl Send) {}
+
+fn main() {
+    require_send(foo());
+}
+</code></pre></pre>
+<p>但是，如果改变<code>foo</code>来将<code>NotSend</code>存储在一个变量中，这个例子就不能编译了：</p>
+<p>However, if we change <code>foo</code> to store <code>NotSend</code> in a variable, this example no
+longer compiles:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use std::rc::Rc;
+</span><span class="boring">#[derive(Default)]
+</span><span class="boring">struct NotSend(Rc&lt;()&gt;);
+</span><span class="boring">async fn bar() {}
+</span>async fn foo() {
+    let x = NotSend::default();
+    bar().await;
+}
+<span class="boring">fn require_send(_: impl Send) {}
+</span><span class="boring">fn main() {
+</span><span class="boring">   require_send(foo());
+</span><span class="boring">}
+</span></code></pre></pre>
+<pre><code>error[E0277]: `std::rc::Rc&lt;()&gt;` cannot be sent between threads safely
+  --&gt; src/main.rs:15:5
+   |
+15 |     require_send(foo());
+   |     ^^^^^^^^^^^^ `std::rc::Rc&lt;()&gt;` cannot be sent between threads safely
+   |
+   = help: within `impl std::future::Future`, the trait `std::marker::Send` is not implemented for `std::rc::Rc&lt;()&gt;`
+   = note: required because it appears within the type `NotSend`
+   = note: required because it appears within the type `{NotSend, impl std::future::Future, ()}`
+   = note: required because it appears within the type `[static generator@src/main.rs:7:16: 10:2 {NotSend, impl std::future::Future, ()}]`
+   = note: required because it appears within the type `std::future::GenFuture&lt;[static generator@src/main.rs:7:16: 10:2 {NotSend, impl std::future::Future, ()}]&gt;`
+   = note: required because it appears within the type `impl std::future::Future`
+   = note: required because it appears within the type `impl std::future::Future`
+note: required by `require_send`
+  --&gt; src/main.rs:12:1
+   |
+12 | fn require_send(_: impl Send) {}
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.
+</code></pre>
+<p>这个报错没问题。如果我们将<code>x</code>存储到变量中，直到<code>.await</code>结束后它才应被释放，到那时<code>async fn</code>可能在另一个线程上运行了。既然<code>Rc</code>不是<code>Send</code>，允许其在线程间传递就是不安全的。一个简单的解决方案就是在<code>.await</code>前就把<code>Rc</code>给<code>drop</code>掉，不过这个目前不行。</p>
+<p>为了解决这个问题，可以通过一个块作用域来把非<code>Send</code>变量包裹起来，这样编译器就能知道有哪些变量不能越过<code>.await</code>语句了。</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use std::rc::Rc;
+</span><span class="boring">#[derive(Default)]
+</span><span class="boring">struct NotSend(Rc&lt;()&gt;);
+</span><span class="boring">async fn bar() {}
+</span>async fn foo() {
+    {
+        let x = NotSend::default();
+    }
+    bar().await;
+}
+<span class="boring">fn require_send(_: impl Send) {}
+</span><span class="boring">fn main() {
+</span><span class="boring">   require_send(foo());
+</span><span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#递归" id="递归">递归</a></h1>
+<p>在内部，<code>async fn</code>会创建一个包含了所有被<code>.await</code>的子<code>Future</code>的状态机类型。由于最终的状态机类型要包含自身，要实现递归的<code>async fn</code>就有些难办了：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">async fn step_one() { /* ... */ }
+</span><span class="boring">async fn step_two() { /* ... */ }
+</span><span class="boring">struct StepOne;
+</span><span class="boring">struct StepTwo;
+</span>// 这个函数：
+async fn foo() {
+    step_one().await;
+    step_two().await;
+}
+// 会产生一个这样的类型：
+enum Foo {
+    First(StepOne),
+    Second(StepTwo),
+}
+
+// 因此这个函数：
+async fn recursive() {
+    recursive().await;
+    recursive().await;
+}
+
+// 会产生这样一个类型：
+enum Recursive {
+    First(Recursive),
+    Second(Recursive),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>此时还不能工作——我们创建了一个无限大小的类型！
+编译器会这样报错：</p>
+<pre><code>error[E0733]: recursion in an `async fn` requires boxing
+ --&gt; src/lib.rs:1:22
+  |
+1 | async fn recursive() {
+  |                      ^ an `async fn` cannot invoke itself directly
+  |
+  = note: a recursive `async fn` must be rewritten to return a boxed future.
+</code></pre>
+<p>为了允许这种情况的发生，就要在中间加一层<code>Box</code>。然而编译器的限制意味着，仅仅是将对<code>recursive()</code>的调用包装在<code>Box::pin</code>还不够。我们还得将<code>recursive</code>转化为一个非<code>async</code>函数并返回一个经过<code>.boxed()</code>的<code>async</code>块：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::future::{BoxFuture, FutureExt};
+
+fn recursive() -&gt; BoxFuture&lt;'static, ()&gt; {
+    async move {
+        recursive().await;
+        recursive().await;
+    }.boxed()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#trait中的async" id="trait中的async">Trait中的<code>async</code></a></h1>
+<p>目前还不能在trait中使用<code>async fn</code>。原因有点复杂，但移除这种限制已在计划之中。</p>
+<p>但与此同时，其实可以用<a href="https://github.com/dtolnay/async-trait">crates.io中的async-trait crate</a>来实现。</p>
+<p>需要注意的是，使用这些trait方法会导致，每次调用函数时都需要进行堆分配。尽管对于大部分应用来说都不会有什么显著的开销，但是若准备在那种，可能每秒都要调用几百万次的，底层函数的公共API里使用此功能，还请三思。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
